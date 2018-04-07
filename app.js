@@ -91,7 +91,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(3000,function(){
+app.listen(8080,'144.202.115.228',function(){
   console.log('your app is started');
 });
 module.exports = app;
