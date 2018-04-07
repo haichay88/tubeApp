@@ -61,7 +61,7 @@ function getvideoInfo(request) {
 }
 
 function getvideoRelated(id) {
-    console.log('getvideoRelated'+ id);
+    
     var deferred = Q.defer();
     result = [];
     youtube.search.list({
