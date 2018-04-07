@@ -1,0 +1,98 @@
+<header>
+    <div class="container-full">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <a href="javascript:void(0)" class="side-opener">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+                <div id="logo">
+                    <a href="/">
+                        <img src="/images/t22.png" alt="th-clip.com" class="hidden-xs hidden-sm" style="width:97px;">
+                        <img src="/Content/images/2Tube-icon-400x400.ico" alt="th-clip.com" class="hidden-lg hidden-md"
+                            style="width:41px;"> </a>
+                    <div class="dropdown">
+                        <a data-toggle="dropdown" href="#" class="user-area" aria-expanded="false">
+                            <h2>{{{__ "Lang"}}}</h2>
+                        </a>
+                        <ul class="dropdown-menu account-menu">
+                            <li>
+                                <a href="/en">
+                                    <i class="fa fa-edit color-1"></i>English</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=ru-RU">
+                                    <i class="fa fa-edit color-1"></i>русский</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=zh-CN">
+                                    <i class="fa fa-edit color-1"></i>中文</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=en-US">
+                                    <i class="fa fa-edit color-1"></i>English - United States</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=en-AU">
+                                    <i class="fa fa-edit color-1"></i>Australia</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=de-DE">
+                                    <i class="fa fa-edit color-1"></i>Deutsche</a>
+                            </li>
+                            <li>
+                                <a href="/vi">
+                                    <i class="fa fa-edit color-1"></i>Tiếng Việt</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=da-DK">
+                                    <i class="fa fa-edit color-1"></i>Denmark</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=th-TH">
+                                    <i class="fa fa-edit color-1"></i>ประเทศไทย</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=ko-KR">
+                                    <i class="fa fa-edit color-1"></i>한국어</a>
+                            </li>
+                            <li>
+                                <a href="/Home/changeLanguage?lang=ja-JP">
+                                    <i class="fa fa-edit color-1"></i>日本</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="search-form hidden-md hidden-lg hidden-md search-form-mb ">
+                    <form action="/Home/Search" id="search" method="get">
+                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" name="query" autocomplete="off">
+                        <input type="submit" value="Keywords"> </form>
+                </div>
+                <div class="f16 f161">
+                    <a class="cis" href="#" data-toggle="modal" data-target="#regioncode" style="display:block">
+                        <span class="flag {{regionCode}}"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-3 col-sm-6 hidden-xs hidden-sm">
+                <div class="search-form">
+                    <form action="/Home/Search/" id="search" method="get">
+                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" name="query" autocomplete="on">
+                        <input type="submit" value="Keywords"> </form>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-5 col-sm-5 hidden-xs hidden-sm">
+                <ul class="top-menu" itemscope="" itemtype="http://www.schema.org/SiteNavigationElement">
+                    <li itemprop="name">
+                        <a itemprop="url" href="/">{{{__ "Home"}}} </a>
+                    </li>
+                    <li itemprop="name">
+                        <a itemprop="url" href="/Home/Live">{{{__ "Live"}}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row"> </div>
+    </div>
+</header>

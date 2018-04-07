@@ -1,0 +1,57 @@
+<div class="site-output">
+    <div id="all-output" class="col-md-12">
+        <h1 class="new-video-title">
+            <i class="fa fa-bolt">
+
+            </i>     {{{__ "Trending"}}}  </h1>
+        
+        <div class="row">
+            {{# each videos}}
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 item-video">
+                <div class="video-item">
+                    <div class="thumb">
+                        <div class="hover-efect"></div>
+                        {{#if durationConverted}}
+                        <small class="time">{{durationConverted}}</small>
+                        {{/if}}
+                        
+                        <a href="/video/{{videoId}}/{{titleConverted}}.html">
+                            <img src="{{imgUrl}}" alt="{{title}}"> 
+                             {{#if isLive}}
+                            <span class="duration" title="Streaming"><i class="fa fa-circle" style="color:red"></i> LIVE</span>
+                            {{/if}}
+                            </a>
+                           
+                    </div>
+                    <div class="video-info">
+                        <a href="/video/{{videoId}}/{{titleConverted}}.html" class="title">{{title}}</a>
+                        <a class="channel-name" href="/Channel/{{chanelId}}/{{channelTitleConverted}}.html">
+                            {{channelTitle}}
+                            <span>
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                        </a>
+                        <span class="views">
+                            
+                            <i class="fa fa-eye"></i>{{viewcount}} views </span>
+                        <span class="date">
+                            <i class="fa fa-clock-o"></i>{{publishDated}}  </span>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            
+        </div>
+
+        
+
+    
+    </div>
+</div>
+
+
+
+
+
+
+   

@@ -1,0 +1,21 @@
+<div class="col-md-4">
+                <div id="related-posts">
+                    {{# each videoRelateds}}
+                    <div class="related-video-item">
+                        <div class="thumb">
+                            <a href="/video/{{videoId}}/{{titleConverted}}.html">
+                                <img src="{{imgUrl}}" alt="{{title}}">
+                            </a>
+                        </div>
+                        <a href="/video/{{videoId}}/{{titleConverted}}.html"
+                            class="title">{{title}} </a>
+                        <a class="channel-name" href="/Channel/{{channelId}}/{{channelTitleConverted}}.html"> {{channelTitle}}
+                            <span>
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                        </a>
+                    </div>
+                {{/each}}
+                   
+                </div>
+            </div>
