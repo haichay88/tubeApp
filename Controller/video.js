@@ -26,7 +26,8 @@ function getvideoInfo(request) {
         id: request.id
     }, function (err, data) {
         if (err) {
-             console.error('getvideoInfo Error: ' + err);
+
+           
             // console.log('key ' + key);
             // util.setKeyUnvalid(key);
             // resetService();
@@ -64,7 +65,7 @@ function getvideoInfo(request) {
 }
 
 function getvideoRelated(id) {
-    
+
     var deferred = Q.defer();
     result = [];
     youtube.search.list({
@@ -77,10 +78,8 @@ function getvideoRelated(id) {
         if (err) {
             console.error('getvideoRelated Error: ' + err);
             console.log('key ' + key);
-            util.setKeyUnvalid(key);
-            resetService();
-            getvideoRelated(id);
-            deferred.reject(new Error(err));
+
+            deferred.reject(err);
         }
         if (data) {
             data.data.items.forEach(element => {
@@ -134,9 +133,9 @@ function getChannleInfo(data) {
     return deferred.promise;
 }
 function getVideoComment(id) {
-    console.log('getvideoRelated'+ id);
+    console.log('getvideoRelated' + id);
     var deferred = Q.defer();
-   
+
     youtube.commentThreads.list({
         part: 'snippet,replies',
         videoId: id,
@@ -173,7 +172,15 @@ var videoServices = {
         }, function (err, data) {
             if (err) {
                 console.error('Error: ' + err);
-                return null;
+               // console.log('key ' + key);
+               util.setKeyUnvalid(key);
+               resetService();
+               videoServices.searchVideo(request,callback);
+               //callback(result);
+               console.log('catch error: ' + error);
+               // Handle any error from all above steps         
+                    
+                
             }
             if (data) {
 
@@ -279,13 +286,18 @@ var videoServices = {
 
     },
     videoDetail: function (callback, request) {
+        console.log(request);
+        if(!request){
+            callback(null);
+            return;
+        }
         var result = {
             video: {},
             videoRelateds: [],
             channelInfo: {
                 imgUrl: undefined
             },
-            comments:undefined
+            comments: undefined
 
         };
         getvideoInfo(request)
@@ -299,38 +311,44 @@ var videoServices = {
                         .then(function (res) {
                             result.channelInfo.imgUrl = res.imgUrl;
                             getVideoComment(data.videoId)
-                            .then(function(sv){
-                                result.comments=sv;
-                                callback(result);
-                            });
-                            
+                                .then(function (sv) {
+                                    result.comments = sv;
+                                    callback(result);
+                                });
 
                         });
                 });
 
             })
             .catch(function (error) {
-                // console.log('key ' + key);
-            util.setKeyUnvalid(key);
-            resetService();
-            videoServices.videoDetail(request,callback);
-                //callback(result);
-                console.log('catch error: ' + error);
-                // Handle any error from all above steps
+                console.log(error.code);
+                
+                if (error.code == 403) {
+                    videoServices.videoDetail(callback,null);
+                } else {
+                    // console.log('key ' + key);
+                    util.setKeyUnvalid(key);
+                    resetService();
+                    videoServices.videoDetail(callback,request);
+                    //callback(result);
+                    console.log('catch error: ' + error);
+                    // Handle any error from all above steps         
+                }
+
             })
             .done();
 
 
 
     },
-    getvideoByCate:function(request, callback){
+    getvideoByCate: function (request, callback) {
         var result = [];
         youtube.videos.list({
             part: 'snippet,contentDetails,statistics',
             regionCode: request.regionCode,
             chart: 'mostPopular',
-            hl:request.hl,
-            videoCategoryId :request.categoryId,
+            hl: request.hl,
+            videoCategoryId: request.categoryId,
             maxResults: 48
         }, function (err, data) {
             if (err) {
