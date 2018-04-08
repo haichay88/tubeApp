@@ -9,7 +9,10 @@ var youtube = google.youtube({
 });
 function resetService() {
     key = util.getFirstKey();
-    youtube.auth = key;
+    youtube = google.youtube({
+        version: 'v3',
+        auth: key //key  //"AIzaSyDP5Elo2ca45nw6UAbMFajMbMu8bXNT5CU"
+    });
 };
 
 
