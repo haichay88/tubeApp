@@ -89,13 +89,14 @@ var commonUlti = {
     var keyValilds = keys.filter(function (item) {
       return item.IsOverLimit == 0;
     });
-
+console.log('key next '+keyValilds[0].KeyAPI);
     return keyValilds[0].KeyAPI;
   },
   setKeyUnvalid: function (key) {
     keys.forEach(element => {
       if (element.KeyAPI == key) {
         element.IsOverLimit = 1;
+        console.log('key just over '+element.KeyAPI);
       }
     });
   }
