@@ -114,6 +114,16 @@ router.get('/Category/:cateid/:html', function (req, res) {
   });
 });
 
+router.get('/Home/NotFound', function (req, res, next) {
+  res.render('Home/notFound', {
+    layout: 'layout',
+    regionCode: req.cookies.rgc,
+    meta: {
+      title: 'Not Found'
+    }
+
+  });
+});
 
 ///
 router.get('/vi', function (req, res) {
@@ -138,14 +148,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
     }
 
     if (!data) {
-      res.render('Home/notFound', {
-        layout: 'layout',
-        regionCode: req.cookies.rgc,
-        meta:{
-          title:'Not Found'
-        }
-
-      });
+      res.redirect('/Home/NotFound');
     } else {
       var meta = {
         title: data.video.title,
@@ -173,8 +176,21 @@ router.get('/video/:videoId/:html', function (req, res, next) {
 });
 
 router.get('/Channel/:channelId/:html', function (req, res, next) {
-  console.log(req.params);
-  res.render('channel', { title: 'video detail', layout: 'layout' });
+ 
+  var request = {
+    id: req.params.channelId
+  };
+  videoService.channelDetail(request, function (data) {
+    if(!data){
+      res.redirect('/Home/NotFound');
+    }else{
+      res.render('channel', { title: 'video detail',
+      layout: 'layout',
+      data:data });
+    }
+   
+  });
+
 });
 
 module.exports = router;

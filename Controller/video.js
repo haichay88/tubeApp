@@ -42,15 +42,13 @@ function getvideoInfo(request) {
                 channelTitle: element.snippet.channelTitle,
                 channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                 imgUrl: element.snippet.thumbnails.medium.url,
-                chanelId: element.snippet.channelId,
+                channelId: element.snippet.channelId,
                 tags: element.snippet.tags,
                 publishDated: element.snippet.publishedAt,
                 duration: element.contentDetails.duration,
                 durationConverted: util.convertDuration(element.contentDetails.duration),
                 viewcount: util.formatNumber(element.statistics.viewCount),
-                channelInfo: {
-                    imgUrl: undefined
-                }
+               
             };
 
             deferred.resolve(row);
@@ -106,12 +104,11 @@ function getvideoRelated(id) {
     return deferred.promise;
 }
 function getChannleInfo(data) {
-
-
+   
     var deferred = Q.defer();
     youtube.channels.list({
         part: 'snippet',
-        id: data.chanelId
+        id: data.channelId
     }, function (err, result) {
         if (err) {
             deferred.reject(err);
@@ -126,6 +123,83 @@ function getChannleInfo(data) {
 
             deferred.resolve(channelInfo);
         }
+    });
+    return deferred.promise;
+}
+
+function getChannel(request) {
+
+
+    var deferred = Q.defer();
+    youtube.channels.list({
+        part: 'snippet,brandingSettings,Statistics',
+        id: request.id
+    }, function (err, data) {
+        if (err) {
+            console.log('getChannel'+err);
+            deferred.reject(err);
+
+        }
+        if (data) {
+            if (data.data.items.length <= 0) {
+                deferred.resolve(null);
+            }
+            var element = data.data.items[0];
+
+            var row = {
+
+                title: element.snippet.title,
+                titleConverted: util.removeUnicode(element.snippet.title),
+                imgUrl: element.brandingSettings.image.bannerTabletHdImageUrl,
+                subscriberCount: util.formatNumber(element.statistics.subscriberCount),
+                description: element.snippet.description,
+                viewcount: util.formatNumber(element.statistics.viewCount)
+            }
+            deferred.resolve(row);
+
+
+        }
+    });
+    return deferred.promise;
+}
+function getvideoByChannel(channelId) {
+
+    var deferred = Q.defer();
+    var result = [];
+    youtube.search.list({
+        part: 'snippet',
+        channelId: channelId,
+        maxResults: 48,
+        type: 'video'
+    }, function (err, data) {
+        if (err) {
+            console.log(err);
+            deferred.reject(err);
+        }
+        if (data) {
+            if (data.data.items.length <= 0) {
+                deferred.resolve(null);
+            }
+            var element = data.data.items.forEach(element => {
+                var row = {
+                    title: element.snippet.title,
+                    titleConverted: util.removeUnicode(element.snippet.title),
+                    videoId: element.id,
+                    channelTitle: element.snippet.channelTitle,
+                    channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
+                    imgUrl: element.snippet.thumbnails.medium.url,
+                    channelId: element.snippet.channelId,
+
+                };
+                result.push(row);
+            });
+
+
+            deferred.resolve(result);
+
+
+        }
+
     });
     return deferred.promise;
 }
@@ -145,6 +219,7 @@ function getVideoComment(id) {
             deferred.reject(err);
         }
         if (data) {
+            
             deferred.resolve(data.data.items);
 
 
@@ -185,7 +260,7 @@ var videoServices = {
                         channelTitle: element.snippet.channelTitle,
                         channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                         imgUrl: element.snippet.thumbnails.medium.url,
-                        chanelId: element.snippet.channelId,
+                        channelId: element.snippet.channelId,
                         publishDated: element.snippet.publishedAt,
 
                     }
@@ -220,7 +295,7 @@ var videoServices = {
                         videoId: element.id.videoId,
                         chanelTitle: element.snippet.channelTitle,
                         imgUrl: element.snippet.thumbnails.medium.url,
-                        chanelId: element.snippet.channelId,
+                        channelId: element.snippet.channelId,
                         publishDated: element.snippet.publishedAt,
                         isLive: true
                     }
@@ -262,7 +337,7 @@ var videoServices = {
                         channelTitle: element.snippet.channelTitle,
                         channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                         imgUrl: element.snippet.thumbnails.medium.url,
-                        chanelId: element.snippet.channelId,
+                        channelId: element.snippet.channelId,
                         tags: element.snippet.tags,
                         publishDated: util.friendlyDate(element.snippet.publishedAt),
 
@@ -296,17 +371,20 @@ var videoServices = {
         };
         getvideoInfo(request)
             .then(function (data) {
+                
                 if (data) {
                     result.video = data;
 
                     getvideoRelated(data.videoId).then(function (response) {
-
+                        
                         result.videoRelateds = response;
                         getChannleInfo(data)
                             .then(function (res) {
                                 result.channelInfo.imgUrl = res.imgUrl;
+                                
                                 getVideoComment(data.videoId)
                                     .then(function (sv) {
+                                        
                                         result.comments = sv;
                                         callback(result);
                                     });
@@ -314,14 +392,14 @@ var videoServices = {
                             });
                     });
 
-                }else{
+                } else {
                     callback(null);
                 }
 
 
             })
             .catch(function (error) {
-                console.log(error);
+                
 
                 if (error.code == 400) {
                     console.log('err 403' + error);
@@ -370,7 +448,7 @@ var videoServices = {
                         channelTitle: element.snippet.channelTitle,
                         channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                         imgUrl: element.snippet.thumbnails.medium.url,
-                        chanelId: element.snippet.channelId,
+                        channelId: element.snippet.channelId,
                         tags: element.snippet.tags,
                         publishDated: util.friendlyDate(element.snippet.publishedAt),
 
@@ -385,6 +463,45 @@ var videoServices = {
 
             }
         });
+    },
+    channelDetail: function (request, callback) {
+        console.log(request);
+        if (!request) {
+            callback(null);
+        }
+        var result = {
+            channelInfo: {},
+            videos: []
+        };
+        getChannel(request)
+            .then(function (response) {
+                
+                if(!response){
+                    callback(null);
+                    return;
+                }
+                result.channelInfo = response;
+                getvideoByChannel(request.id)
+                    .then(function (data) {
+                        result.videos = data;
+                        callback(result);
+                    });
+            })
+            .catch(function (error) {
+                console.log('err 403' + error);
+                if (error.code == 400) {
+                    console.log('err 403' + error);
+                    videoServices.channelDetail(null, callback);
+                } else {
+                    // console.log('key ' + key);
+                    util.setKeyUnvalid(key);
+                    resetService();
+                    videoServices.channelDetail(request, callback);
+                    //callback(result);
+                    console.log('catch error: ' + error);
+                    // Handle any error from all above steps         
+                }
+            }).done();
     }
 
 

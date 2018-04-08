@@ -1,22 +1,22 @@
 <div class="site-output" itemscope="" itemtype="http://schema.org/Article">
-    <meta itemprop="headline" content="Jimmy Kimmel Live">
-    <meta itemprop="thumbnailUrl" content="https://yt3.ggpht.com/XYhu7YuuMJaJFThC-Ae_VxsD7w1iebEaR1KjAjVi_66wQIbVUGAbT1M6_pWTInyj_-8slwKN=w2276-fcrop64=1,00005a57ffffa5a8-nd-c0xffffffff-rj-k-no">
+    <meta itemprop="headline" content="{{data.channelInfo.title}}">
+    <meta itemprop="thumbnailUrl" content="{{data.channelInfo.imgUrl}}">
     <meta itemprop="url" content="https://th-clip.com">
-    <meta itemprop="image" content="https://yt3.ggpht.com/XYhu7YuuMJaJFThC-Ae_VxsD7w1iebEaR1KjAjVi_66wQIbVUGAbT1M6_pWTInyj_-8slwKN=w2276-fcrop64=1,00005a57ffffa5a8-nd-c0xffffffff-rj-k-no">
-    <meta itemprop="author" content="Jimmy Kimmel Live">
-    <meta itemprop="datePublished" content="4/3/2018">
+    <meta itemprop="image" content="{{data.channelInfo.imgUrl}}">
+    <meta itemprop="author" content="J{{data.channelInfo.title}}">
+    
     
     <!-- // col-md-2 -->
     <div id="all-output" class="col-md-12">
         <!-- Category Cover Image -->
         <div id="category-cover-image" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
             <div class="image-in">
-                <img itemprop="logo" src="https://yt3.ggpht.com/XYhu7YuuMJaJFThC-Ae_VxsD7w1iebEaR1KjAjVi_66wQIbVUGAbT1M6_pWTInyj_-8slwKN=w2276-fcrop64=1,00005a57ffffa5a8-nd-c0xffffffff-rj-k-no" alt="Jimmy Kimmel Live">
+                <img itemprop="logo" src="{{data.channelInfo.imgUrl}}" alt="{{data.channelInfo.title}}">
             </div>
-            <h1 class="title" itemprop="name"><i class="fa fa-music"></i> Jimmy Kimmel Live</h1>
+            <h1 class="title" itemprop="name"><i class="fa fa-music"></i> {{data.channelInfo.title}}</h1>
             <ul class="category-info">
-                <li>11,464,695 subscribers </li>
-                <li>5,898,231,777 Views</li>
+                <li>{{data.channelInfo.subscriberCount}} subscribers </li>
+                <li>{{data.channelInfo.viewcount}} 5,898,231,777 Views</li>
                 
                 <li class="subscribe"><a href="#">Subscribe</a></li>
             </ul>
@@ -33,14 +33,16 @@
         <div class="row">
     <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 item-video">
         <div class="video-item">
+            {{#each data.videos}}
             <div class="thumb">
                 <div class="hover-efect"></div>
     
-                <a href="/video/RRBoPveyETc/celebrities-read-mean-tweets-1.html"><img src="https://i.ytimg.com/vi/RRBoPveyETc/mqdefault.jpg" alt="Celebrities Read Mean Tweets #1">
+                <a href="/video/{{videoId}}/{{titleConverted}}.html"><img src="{{imgUrl}}" alt="{{title}}">
                    
                    
                 </a>
             </div>
+            {{/each}}
             <div class="video-info">
                 <a href="/video/RRBoPveyETc/celebrities-read-mean-tweets-1.html" class="title">Celebrities Read Mean Tweets #1 </a>
                
