@@ -307,6 +307,9 @@ var videoServices = {
 
             })
             .catch(function (error) {
+                // console.log('key ' + key);
+            util.setKeyUnvalid(key);
+            resetService();
                 callback(result);
                 console.log('catch error: ' + error);
                 // Handle any error from all above steps
