@@ -26,11 +26,7 @@ router.get('/', function (req, res, next) {
       domain: config.Domain
     };
     if (!data) {
-      res.render('notFound', {
-        layout: 'layout',
-        regionCode: req.cookies.rgc,
-        meta: meta
-      });
+      res.redirect('/Home/NotFound');
     } else {
       res.render('index', {
         layout: 'layout', videos: data,

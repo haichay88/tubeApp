@@ -63,7 +63,7 @@ function getvideoInfo(request) {
 function getvideoRelated(id) {
 
     var deferred = Q.defer();
-    result = [];
+   var result = [];
     youtube.search.list({
         part: 'snippet',
         relatedToVideoId: id,
