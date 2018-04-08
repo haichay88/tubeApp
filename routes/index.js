@@ -56,7 +56,7 @@ router.get('/Home/Search', function (req, res, next) {
   console.log(req.query.query);
   videoService.searchVideo(request, function (data) {
     var meta = {
-      title:config.Domain + req.query.query,
+      title:config.Domain+" - " + req.query.query,
       //imgUrl: data.video.imgUrl,
       url:'https://'+config.Domain + "/Search/?query="+req.query.query,
       domain:config.Domain
