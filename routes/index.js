@@ -55,9 +55,16 @@ router.get('/Home/Search', function (req, res, next) {
   }
   console.log(req.query.query);
   videoService.searchVideo(request, function (data) {
+    var meta = {
+      title:config.Domain + req.query.query,
+      //imgUrl: data.video.imgUrl,
+      url:'https://'+config.Domain + "/Search/?query="+req.query.query,
+      domain:config.Domain
+    };
     res.render('index', {
       layout: 'layout', videos: data,
-      regionCode: req.cookies.rgc
+      regionCode: req.cookies.rgc,
+      meta:meta
     });
   });
 });
@@ -71,9 +78,18 @@ router.get('/Home/live', function (req, res, next) {
     request.regionCode = req.cookies.rgc;
   }
   videoService.liveVideo(request, function (data) {
+    var meta = {
+      title:config.Title,
+      //imgUrl: data.video.imgUrl,
+      url:'https://'+config.Domain,
+      domain:config.Domain
+    };
+
     res.render('index', {
       layout: 'layout', videos: data,
-      regionCode: req.cookies.rgc
+      regionCode: req.cookies.rgc,
+      meta:meta
+
     });
   });
 });
