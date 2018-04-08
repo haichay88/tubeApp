@@ -19,6 +19,7 @@ function resetService() {
 
 
 function getvideoInfo(request) {
+
     var deferred = Q.defer();
 
     youtube.videos.list({
@@ -27,15 +28,12 @@ function getvideoInfo(request) {
     }, function (err, data) {
         if (err) {
 
-           
-            // console.log('key ' + key);
-            // util.setKeyUnvalid(key);
-            // resetService();
-            // videoServices.videoDetail(callback, request);
             deferred.reject(err);
         }
         if (data) {
-
+            if (data.data.items.length <= 0) {
+                deferred.resolve(null);
+            }
             var element = data.data.items[0];
             var row = {
                 title: element.snippet.title,
@@ -116,8 +114,7 @@ function getChannleInfo(data) {
         id: data.chanelId
     }, function (err, result) {
         if (err) {
-            console.error('Error: ' + err);
-            return null;
+            deferred.reject(err);
         }
         if (result) {
 
@@ -145,11 +142,7 @@ function getVideoComment(id) {
     }, function (err, data) {
         if (err) {
             console.error('getVideoComment Error: ' + err);
-            // console.log('key ' + key);
-            // util.setKeyUnvalid(key);
-            // resetService();
-            // videoServices.videoDetail(callback, request);
-            deferred.reject(new Error(err));
+            deferred.reject(err);
         }
         if (data) {
             deferred.resolve(data.data.items);
@@ -172,15 +165,15 @@ var videoServices = {
         }, function (err, data) {
             if (err) {
                 console.error('Error: ' + err);
-               // console.log('key ' + key);
-               util.setKeyUnvalid(key);
-               resetService();
-               videoServices.searchVideo(request,callback);
-               //callback(result);
-               console.log('catch error: ' + error);
-               // Handle any error from all above steps         
-                    
-                
+                // console.log('key ' + key);
+                util.setKeyUnvalid(key);
+                resetService();
+                videoServices.searchVideo(request, callback);
+                //callback(result);
+                console.log('searchVideo catch error: ' + error);
+                // Handle any error from all above steps         
+
+
             }
             if (data) {
 
@@ -287,8 +280,8 @@ var videoServices = {
 
     },
     videoDetail: function (callback, request) {
-        console.log(request);
-        if(!request){
+
+        if (!request) {
             callback(null);
             return;
         }
@@ -303,34 +296,41 @@ var videoServices = {
         };
         getvideoInfo(request)
             .then(function (data) {
-                result.video = data;
+                if (data) {
+                    result.video = data;
 
-                getvideoRelated(data.videoId).then(function (response) {
+                    getvideoRelated(data.videoId).then(function (response) {
 
-                    result.videoRelateds = response;
-                    getChannleInfo(data)
-                        .then(function (res) {
-                            result.channelInfo.imgUrl = res.imgUrl;
-                            getVideoComment(data.videoId)
-                                .then(function (sv) {
-                                    result.comments = sv;
-                                    callback(result);
-                                });
+                        result.videoRelateds = response;
+                        getChannleInfo(data)
+                            .then(function (res) {
+                                result.channelInfo.imgUrl = res.imgUrl;
+                                getVideoComment(data.videoId)
+                                    .then(function (sv) {
+                                        result.comments = sv;
+                                        callback(result);
+                                    });
 
-                        });
-                });
+                            });
+                    });
+
+                }else{
+                    callback(null);
+                }
+
 
             })
             .catch(function (error) {
-                console.log(error.code);
-                
-                if (error.code == 403) {
-                    videoServices.videoDetail(callback,null);
+                console.log(error);
+
+                if (error.code == 400) {
+                    console.log('err 403' + error);
+                    videoServices.videoDetail(callback, null);
                 } else {
                     // console.log('key ' + key);
                     util.setKeyUnvalid(key);
                     resetService();
-                    videoServices.videoDetail(callback,request);
+                    videoServices.videoDetail(callback, request);
                     //callback(result);
                     console.log('catch error: ' + error);
                     // Handle any error from all above steps         

@@ -22,23 +22,23 @@ router.get('/', function (req, res, next) {
     var meta = {
       title: config.Title,
       imgUrl: data[0].imgUrl,
-      url:'https://'+config.Domain + "/",
-      domain:config.Domain
+      url: 'https://' + config.Domain + "/",
+      domain: config.Domain
     };
-    if(!data){
+    if (!data) {
       res.render('notFound', {
         layout: 'layout',
         regionCode: req.cookies.rgc,
-        meta:meta
+        meta: meta
       });
-    }else{
+    } else {
       res.render('index', {
         layout: 'layout', videos: data,
         regionCode: req.cookies.rgc,
-        meta:meta
+        meta: meta
       });
     }
-   
+
   });
 
 });
@@ -53,18 +53,18 @@ router.get('/Home/Search', function (req, res, next) {
   var request = {
     q: req.query.query
   }
-  console.log(req.query.query);
+
   videoService.searchVideo(request, function (data) {
     var meta = {
-      title:config.Domain+" - " + req.query.query,
+      title: config.Domain + " - " + req.query.query,
       //imgUrl: data.video.imgUrl,
-      url:'https://'+config.Domain + "/Search/?query="+req.query.query,
-      domain:config.Domain
+      url: 'https://' + config.Domain + "/Search/?query=" + req.query.query,
+      domain: config.Domain
     };
     res.render('index', {
       layout: 'layout', videos: data,
       regionCode: req.cookies.rgc,
-      meta:meta
+      meta: meta
     });
   });
 });
@@ -79,16 +79,16 @@ router.get('/Home/live', function (req, res, next) {
   }
   videoService.liveVideo(request, function (data) {
     var meta = {
-      title:config.Title,
+      title: config.Title,
       //imgUrl: data.video.imgUrl,
-      url:'https://'+config.Domain,
-      domain:config.Domain
+      url: 'https://' + config.Domain,
+      domain: config.Domain
     };
 
     res.render('index', {
       layout: 'layout', videos: data,
       regionCode: req.cookies.rgc,
-      meta:meta
+      meta: meta
 
     });
   });
@@ -127,25 +127,31 @@ router.get('/en', function (req, res) {
 });
 
 router.get('/video/:videoId/:html', function (req, res, next) {
- 
+
+
   var request = {
     id: req.params.videoId
   };
   videoService.videoDetail(function (data) {
+    if (!req.params.regioncode) {
+      res.cookie('rgc', 'US', { httpOnly: true, Expires: 365 });
+    }
 
-    console.log(data);
-    if(!data){
+    if (!data) {
       res.render('Home/notFound', {
         layout: 'layout',
-        regionCode: req.cookies.rgc
-        
+        regionCode: req.cookies.rgc,
+        meta:{
+          title:'Not Found'
+        }
+
       });
-    }else{
+    } else {
       var meta = {
         title: data.video.title,
         imgUrl: data.video.imgUrl,
-        url:'https://'+config.Domain + "/video/"+data.video.videoId+"/"+data.video.titleConverted+".html",
-        domain:config.Domain
+        url: 'https://' + config.Domain + "/video/" + data.video.videoId + "/" + data.video.titleConverted + ".html",
+        domain: config.Domain
       };
       res.render('Video/video', {
         title: data.title,
@@ -155,11 +161,11 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         videoRelateds: data.videoRelateds,
         comments: data.comments,
         regionCode: req.cookies.rgc,
-        meta:meta
+        meta: meta
       });
     }
 
-   
+
   }, request);
 
 
