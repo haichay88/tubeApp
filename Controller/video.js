@@ -186,9 +186,9 @@ var videoServices = {
 
                 data.data.items.forEach(element => {
                     var row = {
+                        videoId: element.id.videoId,
                         title: element.snippet.title,
                         titleConverted: util.removeUnicode(element.snippet.title),
-                        videoId: element.id,
                         channelTitle: element.snippet.channelTitle,
                         channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                         imgUrl: element.snippet.thumbnails.medium.url,
