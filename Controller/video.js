@@ -73,10 +73,10 @@ function getvideoRelated(id) {
     }, function (err, data) {
         if (err) {
             console.error('getvideoRelated Error: ' + err);
-            // console.log('key ' + key);
-            // util.setKeyUnvalid(key);
-            // resetService();
-            // videoServices.videoDetail(callback, request);
+            console.log('key ' + key);
+            util.setKeyUnvalid(key);
+            resetService();
+            getvideoRelated(id);
             deferred.reject(new Error(err));
         }
         if (data) {
