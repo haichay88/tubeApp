@@ -134,7 +134,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
   };
   videoService.videoDetail(function (data) {
     if (!req.params.regioncode) {
-      res.cookie('rgc', 'US', { httpOnly: true, Expires: 365 });
+      res.cookie('rgc', 'us', { httpOnly: true, Expires: 365 });
     }
 
     if (!data) {
