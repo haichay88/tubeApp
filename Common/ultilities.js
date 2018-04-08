@@ -1,5 +1,5 @@
 var getSlug = require('speakingurl');
-var keys = require('../Common/key.json');
+var keys = require('../Common/key2.json');
 var commonUlti = {
   removeUnicode: function (val) {
     return getSlug(val);
