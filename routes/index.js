@@ -131,7 +131,19 @@ router.get('/en', function (req, res) {
   res.cookie('i18n', 'en', { httpOnly: true, maxAge: dateExpire });
   res.redirect('/')
 });
+router.get('/ja', function (req, res) {
+  res.cookie('i18n', 'ja', { httpOnly: true, maxAge: dateExpire });
+  res.redirect('/')
+});
+router.get('/ko', function (req, res) {
+  res.cookie('i18n', 'ko', { httpOnly: true, maxAge: dateExpire });
+  res.redirect('/')
+});
 
+router.get('/th', function (req, res) {
+  res.cookie('i18n', 'th', { httpOnly: true, maxAge: dateExpire });
+  res.redirect('/')
+});
 router.get('/video/:videoId/:html', function (req, res, next) {
 
   console.log(req.params.rgc);

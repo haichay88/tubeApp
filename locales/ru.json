@@ -1,0 +1,22 @@
+{
+	"Lang": "русский",
+	"LangCode": "ru",
+	"LangCode2": "ru-RU",
+	"view": "view",
+	"Trending": "Trending",
+	"Home": "집",
+	"SearchVideo": "Search video here",
+	"NotFound": "Sorry ! We did not find the content you requested",
+	"Live": "Live",
+	"Movies": "Movies",
+	"AutosVehicles": "자동차",
+	"Music": "Music",
+	"PetsAnimals": "PetsAnimals",
+	"Sports": "Sports",
+	"TravelEvents": "TravelEvents",
+	"Gaming": "노름",
+	"Comedy": "코메디",
+	"Shows": "Shows",
+	"HowtoStyle": "하우투 및 스타일",
+	"ScienceTechnology": "ScienceTechnology"
+}

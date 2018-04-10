@@ -1,0 +1,24 @@
+{
+    "Lang": "한국어",
+	"LangCode": "ko",
+	"LangCode2": "ko-KR",
+	"view": "조회수",
+	"Trending": "인기 급상승",
+	"Home": "집",
+	"SearchVideo": "여기에서 검색 비디오",
+	"NotFound": "죄송합니다 ! 요청한 콘텐츠를 찾지 못했습니다.",
+	"Live": "살고 있다",
+	"Movies": "영화 산업",
+	"AutosVehicles": "자동차",
+    "Music": "음악",
+    "News":"뉴스",
+	"PetsAnimals": "애완 동물 및 동물",
+	"Sports": "스포츠",
+	"TravelEvents": "여행 및 이벤트",
+	"Gaming": "노름",
+	"Comedy": "코메디",
+	"Shows": "쇼",
+	"HowtoStyle": "하우투 및 스타일",
+	"ScienceTechnology": "과학 기술"
+
+}

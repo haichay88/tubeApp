@@ -1,0 +1,25 @@
+{
+    "Lang": "日本",
+    "LangCode": "ja",
+    "LangCode2": "ja-JP",
+    "view": "ビュー",
+    "Trending": "トレンド",
+    "Home" : "ホーム",
+    "SearchVideo" : "ここから検索ビデオ",
+    "NotFound" : "ごめんなさい ！ リクエストしたコンテンツが見つかりませんでした",
+    "Live" : "ライブ",
+    "Movies" : "映画",
+    "Music" : "音楽",
+    "News" : "ニュース",
+    "PetsAnimals" : "ペットと動物",
+    "ScienceTechnology" : "科学",
+    "Shows" : "プログラム",
+    "Sports" : "スポーツ",
+    "TravelEvents" : "旅行＆イベント",
+    "AutosVehicles" : "自動車",
+    "Comedy" : "コメディー",
+    "Gaming" : "ゲーム",
+    "HowtoStyle" : "ハウツー＆スタイル"
+
+
+}

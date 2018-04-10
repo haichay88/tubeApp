@@ -7,7 +7,19 @@
     "Home" : "Home",
     "SearchVideo" : "Search video here",
     "NotFound" : "Sorry ! We did not find the content you requested",
-    "Live" : "Live"
+    "Live" : "Live",
+    "Movies" : "Movies",
+    "Music" : "Music",
+    "News" : "News",
+    "PetsAnimals" : "Pets and Animals",
+    "ScienceTechnology" : "Science Technology",
+    "Shows" : "Shows",
+    "Sports" : "Sports",
+    "TravelEvents" : "Travel & Events",
+    "AutosVehicles" : "Autos Vehicles",
+    "Comedy" : "Comedy",
+    "Gaming" : "Gaming",
+    "HowtoStyle" : "Howto Style"
 
 
 }

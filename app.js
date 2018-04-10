@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 i18n.configure({
 
   //define how many languages we would support in our application
-  locales:['en', 'vi'],
+  locales:['en', 'vi','ja','ko','th'],
   
   //define the path to language json files, default is /locales
   directory: __dirname + '/locales',
