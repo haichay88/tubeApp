@@ -8,10 +8,10 @@
                 </div>
                 <div class="video_info_actions clearfix" itemscope="" itemtype="http://schema.org/VideoObject">
                     <div class="clearfix detail-bg">
-                        <meta itemprop="uploadDate" content="4/2/2018">
+                        <meta itemprop="uploadDate" content="{{video.publishDated}}">
                         <meta itemprop="thumbnailUrl" content={{video.imgUrl}}>
                         <meta itemprop="url" content="{{video.url}}">
-                        <meta itemprop="duration" content="PT7M48S">
+                        <meta itemprop="duration" content="{{video.duration}}">
                         <meta itemprop="name" content="{{video.title}}">
                         <div class="clearfix title-area">
                             <h1 class="">{{video.title}}</h1>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="clearfix like-rating-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="clearfix" itemscope="" itemtype="http://schema.org/Rating">
-                                    <span class="views-count" itemprop="ratingValue">Views: 351,780</span>
+                                    <span class="views-count" itemprop="ratingValue">Views: {{video.viewcount}}</span>
                                     <meta itemprop="ratingCount" content="17,576"> </div>
                                 <div class="clearfix like-rating" id="rating_container">
                                     <div class="rating clearfix">
@@ -55,13 +55,13 @@
                                             <div class="like-dislike">
                                                 <a class="btn-like">
                                                     <i></i>
-                                                    <span id="l_num">&nbsp;17,576</span>
+                                                    <span id="l_num">&nbsp;{{video.likecount}}</span>
                                                 </a>
                                             </div>
                                             <div class="like-dislike">
                                                 <a class="btn-dislike">
                                                     <i></i>
-                                                    <span id="disl_num">&nbsp;678</span>
+                                                    <span id="disl_num">&nbsp;{{video.dislikecount}}</span>
                                                 </a>
                                             </div>
                                         </div>

@@ -165,7 +165,7 @@ vbut {
             .rating .like-dislike a.btn-like i {
                 opacity: .5;
                 margin: 0 2px 0 0;
-                background: url(/content/images/up.png) no-repeat;
+                background: url(/images/up.png) no-repeat;
                 background-size: 100%;
                 width: 20px;
                 height: 20px;
@@ -183,7 +183,7 @@ vbut {
 .rating .like-dislike a.btn-dislike i {
     opacity: .5;
     margin: 0 5px 0 0;
-    background: url(/content/images/down.png) no-repeat;
+    background: url(/images/down.png) no-repeat;
     background-size: 100%;
     width: 22px;
     height: 20px;

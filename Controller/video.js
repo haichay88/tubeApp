@@ -48,7 +48,11 @@ function getvideoInfo(request) {
                 duration: element.contentDetails.duration,
                 durationConverted: util.convertDuration(element.contentDetails.duration),
                 viewcount: util.formatNumber(element.statistics.viewCount),
-               
+                dislikecount :util.formatNumber(element.statistics.dislikeCount),
+                likecount : util.formatNumber(element.statistics.likeCount),
+                height : element.snippet.thumbnails.high.height,
+                width : element.snippet.thumbnails.high.width,
+                description : element.snippet.description,
             };
 
             deferred.resolve(row);
@@ -184,7 +188,7 @@ function getvideoByChannel(channelId) {
                 var row = {
                     title: element.snippet.title,
                     titleConverted: util.removeUnicode(element.snippet.title),
-                    videoId: element.id,
+                    videoId: element.id.videoId,
                     channelTitle: element.snippet.channelTitle,
                     channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                     imgUrl: element.snippet.thumbnails.medium.url,

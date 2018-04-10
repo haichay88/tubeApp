@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
-
+var dateExpire=360 * 24 * 3600 * 1000;
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
@@ -40,7 +40,7 @@ router.get('/', function (req, res, next) {
 });
 /* GET home page. */
 router.get('/Home/ChangeRegion/:regioncode', function (req, res, next) {
-  res.cookie('rgc', req.params.regioncode, { httpOnly: true, Expires: 365 });
+  res.cookie('rgc', req.params.regioncode, { httpOnly: true, maxAge: dateExpire });
   res.redirect('/')
 });
 /* Search video */
@@ -92,7 +92,7 @@ router.get('/Home/live', function (req, res, next) {
 
 /* get video by categor */
 router.get('/Category/:cateid/:html', function (req, res) {
-  console.log(req.params.cateid);
+ 
   var request = {
     regionCode: "US",
     categoryId: req.params.cateid,
@@ -124,30 +124,30 @@ router.get('/Home/NotFound', function (req, res, next) {
 ///
 router.get('/vi', function (req, res) {
 
-  res.cookie('i18n', 'vi', { httpOnly: true, Expires: 365 });
+  res.cookie('i18n', 'vi', { httpOnly: true, maxAge: dateExpire});
   res.redirect('/')
 });
 router.get('/en', function (req, res) {
-  res.cookie('i18n', 'en', { httpOnly: true, Expires: 365 });
+  res.cookie('i18n', 'en', { httpOnly: true, maxAge: dateExpire });
   res.redirect('/')
 });
 
 router.get('/video/:videoId/:html', function (req, res, next) {
 
-
+  console.log(req.params.rgc);
+  if (!req.cookies.rgc) {
+    res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
+  }
   var request = {
     id: req.params.videoId
   };
   videoService.videoDetail(function (data) {
-    if (!req.params.regioncode) {
-      res.cookie('rgc', 'us', { httpOnly: true, Expires: 365 });
-    }
+   
 
     if (!data) {
       res.redirect('/Home/NotFound');
     } else {
       var meta = {
-        title: data.video.title,
         imgUrl: data.video.imgUrl,
         url: 'https://' + config.Domain + "/video/" + data.video.videoId + "/" + data.video.titleConverted + ".html",
         domain: config.Domain
