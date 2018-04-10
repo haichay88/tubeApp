@@ -469,7 +469,7 @@ var videoServices = {
         });
     },
     channelDetail: function (request, callback) {
-        console.log(request);
+       
         if (!request) {
             callback(null);
         }

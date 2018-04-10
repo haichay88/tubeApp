@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
-var dateExpire=360 * 24 * 3600 * 1000;
+var dateExpire = 360 * 24 * 3600 * 1000;
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
@@ -92,7 +92,7 @@ router.get('/Home/live', function (req, res, next) {
 
 /* get video by categor */
 router.get('/Category/:cateid/:html', function (req, res) {
- 
+
   var request = {
     regionCode: "US",
     categoryId: req.params.cateid,
@@ -124,7 +124,7 @@ router.get('/Home/NotFound', function (req, res, next) {
 ///
 router.get('/vi', function (req, res) {
 
-  res.cookie('i18n', 'vi', { httpOnly: true, maxAge: dateExpire});
+  res.cookie('i18n', 'vi', { httpOnly: true, maxAge: dateExpire });
   res.redirect('/')
 });
 router.get('/en', function (req, res) {
@@ -142,7 +142,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
     id: req.params.videoId
   };
   videoService.videoDetail(function (data) {
-   
+
 
     if (!data) {
       res.redirect('/Home/NotFound');
@@ -150,7 +150,10 @@ router.get('/video/:videoId/:html', function (req, res, next) {
       var meta = {
         imgUrl: data.video.imgUrl,
         url: 'https://' + config.Domain + "/video/" + data.video.videoId + "/" + data.video.titleConverted + ".html",
-        domain: config.Domain
+        domain: config.Domain,
+        width:data.video.width,
+        height:data.video.height,
+        publishDated:data.video.publishDated,
       };
       res.render('Video/video', {
         title: data.title,
@@ -172,19 +175,30 @@ router.get('/video/:videoId/:html', function (req, res, next) {
 });
 
 router.get('/Channel/:channelId/:html', function (req, res, next) {
- 
+
   var request = {
     id: req.params.channelId
   };
   videoService.channelDetail(request, function (data) {
-    if(!data){
+    if (!data) {
       res.redirect('/Home/NotFound');
-    }else{
-      res.render('channel', { title: 'video detail',
-      layout: 'layout',
-      data:data });
+    } else {
+     
+      var meta = {
+        title:data.channelInfo.title,
+        imgUrl: data.channelInfo.imgUrl,
+        url: 'https://' + config.Domain + "/channel/" + req.params.channelId + "/" + data.channelInfo.titleConverted + ".html",
+        domain: config.Domain
+      };
+
+      res.render('channel', {
+        title: 'video detail',
+        layout: 'layout',
+        data: data,
+        meta: meta
+      });
     }
-   
+
   });
 
 });
