@@ -148,6 +148,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
       res.redirect('/Home/NotFound');
     } else {
       var meta = {
+        title:data.video.title,
         imgUrl: data.video.imgUrl,
         url: 'https://' + config.Domain + "/video/" + data.video.videoId + "/" + data.video.titleConverted + ".html",
         domain: config.Domain,
@@ -156,7 +157,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         publishDated:data.video.publishDated,
       };
       res.render('Video/video', {
-        title: data.title,
+       
         layout: 'layout',
         video: data.video,
         channelInfo: data.channelInfo,
