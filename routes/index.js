@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
+var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -155,6 +156,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
   };
   videoService.videoDetail(function (data) {
 
+   // var a= api.postVideo(data);
 
     if (!data) {
       res.redirect('/Home/NotFound');
@@ -168,6 +170,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         height:data.video.height,
         publishDated:data.video.publishDated,
       };
+      
       res.render('Video/video', {
        
         layout: 'layout',

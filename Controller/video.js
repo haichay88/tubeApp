@@ -47,12 +47,12 @@ function getvideoInfo(request) {
                 publishDated: element.snippet.publishedAt,
                 duration: element.contentDetails.duration,
                 durationConverted: util.convertDuration(element.contentDetails.duration),
-                viewcount: util.formatNumber(element.statistics.viewCount),
-                dislikecount :util.formatNumber(element.statistics.dislikeCount),
-                likecount : util.formatNumber(element.statistics.likeCount),
-                height : element.snippet.thumbnails.high.height,
-                width : element.snippet.thumbnails.high.width,
-                description : element.snippet.description,
+                viewCount: util.formatNumber(element.statistics.viewCount),
+                dislikeCount: util.formatNumber(element.statistics.dislikeCount),
+                likeCount: util.formatNumber(element.statistics.likeCount),
+                height: element.snippet.thumbnails.high.height,
+                width: element.snippet.thumbnails.high.width,
+                description: element.snippet.description,
             };
 
             deferred.resolve(row);
@@ -67,7 +67,7 @@ function getvideoInfo(request) {
 function getvideoRelated(id) {
 
     var deferred = Q.defer();
-   var result = [];
+    var result = [];
     youtube.search.list({
         part: 'snippet',
         relatedToVideoId: id,
@@ -108,7 +108,7 @@ function getvideoRelated(id) {
     return deferred.promise;
 }
 function getChannleInfo(data) {
-   
+
     var deferred = Q.defer();
     youtube.channels.list({
         part: 'snippet',
@@ -122,7 +122,9 @@ function getChannleInfo(data) {
             var element = result.data.items[0];
 
             var channelInfo = {
-                imgUrl: element.snippet.thumbnails.medium.url
+                imgUrl: element.snippet.thumbnails.medium.url,
+                title: element.snippet.title,
+                id: data.channelId
             };
 
             deferred.resolve(channelInfo);
@@ -140,7 +142,7 @@ function getChannel(request) {
         id: request.id
     }, function (err, data) {
         if (err) {
-            console.log('getChannel'+err);
+            console.log('getChannel' + err);
             deferred.reject(err);
 
         }
@@ -208,7 +210,7 @@ function getvideoByChannel(channelId) {
     return deferred.promise;
 }
 function getVideoComment(id) {
-    console.log('getvideoRelated' + id);
+    var result = [];
     var deferred = Q.defer();
 
     youtube.commentThreads.list({
@@ -223,8 +225,34 @@ function getVideoComment(id) {
             deferred.reject(err);
         }
         if (data) {
-            
-            deferred.resolve(data.data.items);
+
+            data.data.items.forEach(element => {
+
+                var row = {
+                    authorProfileImageUrl: element.snippet.topLevelComment.snippet.authorProfileImageUrl,
+                    authorDisplayName: element.snippet.topLevelComment.snippet.authorDisplayName,
+                    textDisplay: element.snippet.topLevelComment.snippet.textDisplay,
+                    replies: []
+
+                };
+               
+                if (element.replies) {
+                    element.replies.comments.forEach(item => {
+                       
+                        var sub = {
+                            authorProfileImageUrl: item.snippet.authorProfileImageUrl,
+                            authorDisplayName: item.snippet.authorDisplayName,
+                            textDisplay: item.snippet.textDisplay
+                        };
+                        row.replies.push(sub);
+                    });
+                }
+                
+                result.push(row);
+            });
+
+
+            deferred.resolve(result);
 
 
         }
@@ -367,28 +395,26 @@ var videoServices = {
         var result = {
             video: {},
             videoRelateds: [],
-            channelInfo: {
-                imgUrl: undefined
-            },
+            channelInfo: {},
             comments: undefined
 
         };
         getvideoInfo(request)
             .then(function (data) {
-                
+
                 if (data) {
                     result.video = data;
 
                     getvideoRelated(data.videoId).then(function (response) {
-                        
+
                         result.videoRelateds = response;
                         getChannleInfo(data)
                             .then(function (res) {
-                                result.channelInfo.imgUrl = res.imgUrl;
-                                
+                                result.channelInfo = res;
+
                                 getVideoComment(data.videoId)
                                     .then(function (sv) {
-                                        
+
                                         result.comments = sv;
                                         callback(result);
                                     });
@@ -403,7 +429,7 @@ var videoServices = {
 
             })
             .catch(function (error) {
-                
+
 
                 if (error.code == 400) {
                     console.log('err 403' + error);
@@ -469,7 +495,7 @@ var videoServices = {
         });
     },
     channelDetail: function (request, callback) {
-       
+
         if (!request) {
             callback(null);
         }
@@ -479,8 +505,8 @@ var videoServices = {
         };
         getChannel(request)
             .then(function (response) {
-                
-                if(!response){
+
+                if (!response) {
                     callback(null);
                     return;
                 }

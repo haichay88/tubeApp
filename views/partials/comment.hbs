@@ -7,38 +7,38 @@
                 <li class="clearfix">
                     <div class="comments-box clearfix">
                         <div class="comment-avatar">
-                            <img data-original="{{snippet.topLevelComment.snippet.authorProfileImageUrl}}" alt="{{snippet.topLevelComment.snippet.authorDisplayName}}" class="lazy comnt_pic" src="{{snippet.topLevelComment.snippet.authorProfileImageUrl}}" style="display: block;">
+                            <img data-original="{{authorProfileImageUrl}}" alt="{{authorDisplayName}}" class="lazy comnt_pic" src="{{authorProfileImageUrl}}" style="display: block;">
                         </div>
                         <div class="comment-info">
                             <div class="clearfix">
                                 <a href="#">
                                     <strong class="comment-creator">
-                                        {{snippet.topLevelComment.snippet.authorDisplayName}}
+                                        {{authorDisplayName}}
                                       
                                     </strong>
                                 </a>
                             </div>
-                            {{snippet.topLevelComment.snippet.textDisplay}}
+                            {{textDisplay}}
                         
                            
-                            {{# if this.replies.comments}}
+                            {{# if this.replies}}
                                 <div class="com-info-actions clearfix">
                                     <div class="reply">
                                         <ul id="comments-ul" style="padding-left:0">
-                                           {{#each replies.comments}}
+                                           {{#each replies}}
                                                 <p></p>
                                                 <li class="clearfix">
                                                     <div class="comment-avatar">
                                                         
-                                                        <img data-original="{{snippet.authorProfileImageUrl}}" class="lazy comnt_pic" alt="{{snippet.authorDisplayName}}" src="{{snippet.authorProfileImageUrl}}" style="display: block;">
+                                                        <img data-original="{{authorProfileImageUrl}}" class="lazy comnt_pic" alt="{{authorDisplayName}}" src="{{authorProfileImageUrl}}" style="display: block;">
                                                     </div>
                                                     <div class="comment-info">
                                                         <div class="clearfix">
                                                             <a>
-                                                                <strong>{{snippet.authorDisplayName}} </strong>
+                                                                <strong>{{authorDisplayName}} </strong>
                                                             </a>&nbsp;
                                                            
-                                                            {{snippet.textDisplay}} 
+                                                            {{textDisplay}} 
                                                            
                                                         </div>
                                                     </div>
