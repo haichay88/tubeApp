@@ -2,6 +2,7 @@
 var { google } = require('googleapis');
 var Q = require("q");
 var util = require('../Common/ultilities');
+var api = require('../Controller/api');
 var key = util.getFirstKey();
 var youtube = google.youtube({
     version: 'v3',
@@ -21,46 +22,53 @@ function resetService() {
 function getvideoInfo(request) {
 
     var deferred = Q.defer();
+    var req = { id: request.id };
+    var data = api.getVideo(request.id);
+    if (data) {
+        console.log('has data from api');
+        deferred.resolve(row);
+    } else {
+        youtube.videos.list({
+            part: 'snippet,contentDetails,statistics',
+            id: request.id
+        }, function (err, data) {
+            if (err) {
 
-    youtube.videos.list({
-        part: 'snippet,contentDetails,statistics',
-        id: request.id
-    }, function (err, data) {
-        if (err) {
-
-            deferred.reject(err);
-        }
-        if (data) {
-            if (data.data.items.length <= 0) {
-                deferred.resolve(null);
+                deferred.reject(err);
             }
-            var element = data.data.items[0];
-            var row = {
-                title: element.snippet.title,
-                titleConverted: util.removeUnicode(element.snippet.title),
-                videoId: element.id,
-                channelTitle: element.snippet.channelTitle,
-                channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
-                imgUrl: element.snippet.thumbnails.medium.url,
-                channelId: element.snippet.channelId,
-                tags: element.snippet.tags,
-                publishDated: element.snippet.publishedAt,
-                duration: element.contentDetails.duration,
-                durationConverted: util.convertDuration(element.contentDetails.duration),
-                viewCount: util.formatNumber(element.statistics.viewCount),
-                dislikeCount: util.formatNumber(element.statistics.dislikeCount),
-                likeCount: util.formatNumber(element.statistics.likeCount),
-                height: element.snippet.thumbnails.high.height,
-                width: element.snippet.thumbnails.high.width,
-                description: element.snippet.description,
-            };
+            if (data) {
+                if (data.data.items.length <= 0) {
+                    deferred.resolve(null);
+                }
+                var element = data.data.items[0];
+                var row = {
+                    title: element.snippet.title,
+                    titleConverted: util.removeUnicode(element.snippet.title),
+                    videoId: element.id,
+                    channelTitle: element.snippet.channelTitle,
+                    channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
+                    imgUrl: element.snippet.thumbnails.medium.url,
+                    channelId: element.snippet.channelId,
+                    tags: element.snippet.tags,
+                    publishDated: element.snippet.publishedAt,
+                    duration: element.contentDetails.duration,
+                    durationConverted: util.convertDuration(element.contentDetails.duration),
+                    viewCount: util.formatNumber(element.statistics.viewCount),
+                    dislikeCount: util.formatNumber(element.statistics.dislikeCount),
+                    likeCount: util.formatNumber(element.statistics.likeCount),
+                    height: element.snippet.thumbnails.high.height,
+                    width: element.snippet.thumbnails.high.width,
+                    description: element.snippet.description,
+                };
 
-            deferred.resolve(row);
+                deferred.resolve(row);
 
 
-        }
+            }
 
-    });
+        });
+    }
+
     return deferred.promise;
 }
 
@@ -235,10 +243,10 @@ function getVideoComment(id) {
                     replies: []
 
                 };
-               
+
                 if (element.replies) {
                     element.replies.comments.forEach(item => {
-                       
+
                         var sub = {
                             authorProfileImageUrl: item.snippet.authorProfileImageUrl,
                             authorDisplayName: item.snippet.authorDisplayName,
@@ -247,7 +255,7 @@ function getVideoComment(id) {
                         row.replies.push(sub);
                     });
                 }
-                
+
                 result.push(row);
             });
 
@@ -532,6 +540,116 @@ var videoServices = {
                     // Handle any error from all above steps         
                 }
             }).done();
+    },
+    getVideoDetail: function (request, callback) {
+
+        api.getVideo(request.id, function (res) {
+            console.log(res)
+            if (res) {
+                var result = JSON.parse(res);
+                callback(result);
+
+            } else {
+                youtube.videos.list({
+                    part: 'snippet,contentDetails,statistics',
+                    id: request.id
+                }, function (err, data) {
+                    if (err) {
+                        // console.log('key ' + key);
+                        util.setKeyUnvalid(key);
+                        resetService();
+                        videoServices.getVideoDetail(request, callback);
+                        //callback(result);
+                        console.log('catch getVideoDetail error: ' + err);
+                        // Handle any error from all above steps         
+                        //deferred.reject(err);
+                    }
+                    if (data) {
+                        if (data.data.items.length <= 0) {
+                            return null;
+                        }
+                        var element = data.data.items[0];
+                        
+                        var row = {
+                            title: element.snippet.title,
+                            titleConverted: util.removeUnicode(element.snippet.title),
+                            videoId: element.id,
+                            channelTitle: element.snippet.channelTitle,
+                            channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
+                            imgUrl: element.snippet.thumbnails.medium.url,
+                            channelId: element.snippet.channelId,
+                            tags: element.snippet.tags.join(),
+                            publishDated: element.snippet.publishedAt,
+                            duration: element.contentDetails.duration,
+                            durationConverted: util.convertDuration(element.contentDetails.duration),
+                            viewCount: util.formatNumber(element.statistics.viewCount),
+                            dislikeCount: util.formatNumber(element.statistics.dislikeCount),
+                            likeCount: util.formatNumber(element.statistics.likeCount),
+                            height: element.snippet.thumbnails.high.height,
+                            width: element.snippet.thumbnails.high.width,
+                            description: element.snippet.description,
+                        };
+                        var reg={
+                            video:row
+                        };
+                        api.postVideo(reg);
+                        callback(row);
+
+
+
+                    }
+
+                });
+            }
+        });
+    },
+    getComment: function (request, callback) {
+        getVideoComment(request.id)
+            .then(function (sv) {
+                callback(sv);
+            })
+            .catch(function (error) {
+
+
+                if (error.code == 400) {
+                    console.log('err 403' + error);
+                    //videoServices.videoDetail(callback, null);
+                } else {
+                    // console.log('key ' + key);
+                    util.setKeyUnvalid(key);
+                    resetService();
+                    videoServices.getComment(request, callback);
+                    //callback(result);
+                    console.log('catch error: ' + error);
+                    // Handle any error from all above steps         
+                }
+
+            })
+            .done();;
+    },
+    getVideoRelated: function (request, callback) {
+        getvideoRelated(request.id)
+            .then(function (sv) {
+                callback(sv);
+            })
+            .catch(function (error) {
+
+
+                if (error.code == 400) {
+                    console.log('err 403' + error);
+                    //videoServices.videoDetail(callback, null);
+                } else {
+                    // console.log('key ' + key);
+                    util.setKeyUnvalid(key);
+                    resetService();
+                    videoServices.getVideoRelated(request, callback);
+                    //callback(result);
+                    console.log('catch error: ' + error);
+                    // Handle any error from all above steps         
+                }
+
+            })
+            .done();;
     }
 
 

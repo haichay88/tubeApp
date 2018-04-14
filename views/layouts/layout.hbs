@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="{{{__ "LangCode"}}}" >
+<html itemscope itemtype="http://schema.org/WebPage" lang="{{{__ " LangCode "}}}">
+
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="Content-Language" content="{{{__ "LangCode2"}}}">
+    <meta http-equiv="Content-Language" content="{{{__ " LangCode2 "}}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{meta.title}}</title>
     <meta name="robots" content="index,follow" />
@@ -13,18 +13,18 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{meta.title}}" />
     <meta property="og:url" content="{{meta.url}}" />
-    <meta property="og:description" content="{{description}}" />
-   
+    <meta property="og:description" content="{{meta.tags}}" />
+
     <meta property="article:published_time" content="{{meta.publishDated}}" />
     <meta property="article:modified_time" content="{{meta.publishDated}}" />
-   
+
     <meta property="og:site_name" content="{{meta.domain}}" />
     <meta property="og:image" content="{{meta.imgUrl}}" />
-   
+
     <meta property="og:image:width" content="{{meta.width}}" />
     <meta property="og:image:height" content="{{meta.height}}" />
-   
-    <meta property="og:locale" content="{{{__ "LangCode2"}}}" />
+
+    <meta property="og:locale" content="{{{__ " LangCode2 "}}}" />
     <meta name="twitter:site" content="{{meta.domain}}" />
     <meta name="twitter:text:title" content="{{meta.title}}" />
     <meta name="twitter:image" content="{{meta.imgUrl}}" />
@@ -37,7 +37,7 @@
     <!-- Meta Tags -->
 
 
-    <meta name="description" content="{{meta.description}}">
+    <meta name="description" content="{{meta.tags}}">
     <link href="/stylesheets/bootstrap.css" rel="stylesheet" />
     <link href="/stylesheets/Site.css" rel="stylesheet" />
     <link href="/stylesheets/style.css" rel="stylesheet" />
@@ -46,36 +46,31 @@
     <link href="/stylesheets/font-awesome.min.css" rel="stylesheet" />
 
 
-    
+
 </head>
+
 <body>
-   
-   
-    {{>headerTop}}
 
-    {{{body}}}
 
-    
-{{>menuleft}}
-{{>regionCode}}
-  
-   
-    
-    
-<script src="/javascripts/jquery-1.10.2.js"></script>
-<script src="/javascripts/bootstrap.js"></script>
-<script>
-    $(document).ready(function () {
-    $(".side-opener").on({
-        click: function (n) {
-            n.preventDefault();
-            $("body").toggleClass("sideactive")
-        }
-    });
-});
-</script>
- <div id="fb-root"></div>
-    <script async >
+    {{>headerTop}} {{{body}}} {{>menuleft}} {{>regionCode}}
+
+
+
+
+    <script src="/javascripts/jquery-1.10.2.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".side-opener").on({
+                click: function (n) {
+                    n.preventDefault();
+                    $("body").toggleClass("sideactive")
+                }
+            });
+        });
+    </script>
+    <div id="fb-root"></div>
+    <script async>
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
@@ -85,16 +80,26 @@
         }(document, 'script', 'facebook-jssdk'));</script>
 
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110451775-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110451775-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'UA-110451775-1');
-</script>
+        gtag('config', 'UA-110451775-1');
+    </script>
+    <script>
+        $(document).ready(function () {
 
+            $(".partialContents").each(function (index, item) {
+                var url = window.location.origin + $(item).data("url");
+                if (url && url.length > 0) {
+                    $(item).load(url);
+                }
+            });
+        });
+    </script>
 </body>
-</html>
 
+</html>

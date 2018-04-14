@@ -16,7 +16,8 @@
                         <div class="clearfix title-area">
                             <h1 class="">{{video.title}}</h1>
                         </div>
-                          <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"
+                            data-share="true"></div>
 
                         <div class="user-likes-count clearfix hidden-xs hidden-sm">
                             <div class="user-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -26,15 +27,13 @@
                                         <meta itemprop="url" content="/Channel/{{video.channelId}}/{{video.channelTitleConverted}}.html">
                                         <meta itemprop="logo" content="{{channelInfo.imgUrl}}">
                                         <meta itemprop="name" content="{{video.channelTitle}}">
-                                        <img itemprop="image" src="{{channelInfo.imgUrl}}"
-                                            alt="Complex"> </a>
+                                        <img itemprop="image" src="{{channelInfo.imgUrl}}" alt="Complex"> </a>
                                     <div class="sub-title">
                                         <strong class="user_title" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
                                             <a href="/Channel/{{video.channelId}}/{{video.channelTitleConverted}}.html">{{video.channelTitle}}</a>
                                         </strong>
                                         <div id="buttid" class="clearfix btn-holder ">
-                                            <a id="subscribeUser" class="btn btn-subscribe btn-primary" href="#" data-toggle="tooltip"
-                                                title="" data-original-title="Subscribe">
+                                            <a id="subscribeUser" class="btn btn-subscribe btn-primary" href="#" data-toggle="tooltip" title="" data-original-title="Subscribe">
                                                 <span>
                                                     <i class="fa fa-youtube-play" aria-hidden="true"></i>Subscribe</span>
                                             </a>
@@ -45,7 +44,7 @@
                             <div class="clearfix like-rating-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="clearfix" itemscope="" itemtype="http://schema.org/Rating">
                                     <span class="views-count" itemprop="ratingValue">Views: {{video.viewCount}}</span>
-                                    <meta itemprop="ratingCount" content="17,576"> </div>
+                                    <meta itemprop="ratingCount" content="{{video.viewCount}}"> </div>
                                 <div class="clearfix like-rating" id="rating_container">
                                     <div class="rating clearfix">
                                         <div class="clearfix rating-holder">
@@ -88,17 +87,16 @@
                                     <div class="action_box_title"></div>
                                     <div class="form-group">
                                         <label for="link_video">Link</label>
-                                        <input type="text" name="link_video" id="link_video" value="{{video.url}}"
-                                             class="form-control"> </div>
-                                    
+                                        <input type="text" name="link_video" id="link_video" value="{{video.url}}" class="form-control"> </div>
+
                                 </div>
                             </div>
                             <div class="tab-pane fade in active clearfix panel-collapse collapse" id="moretab">
                                 <div class="panel-body-content">
                                     <div class="clearfix watch-vid-details">
-                                        <div style="white-space: pre-wrap;" itemprop="description"> 
+                                        <div style="white-space: pre-wrap;" itemprop="description">
                                             {{video.description}}
-                                             </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -114,8 +112,11 @@
                                     <h2 class="com_count">Comment</h2>
                                 </div>
                                 <div id="userCommentsList" class="">
-                                   <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div>
-                                    {{>comment}}
+                                    <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div>
+                                    <div class="partialContents" data-url="/comment/{{video.videoId}}">
+                                        Loading ...
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -124,7 +125,11 @@
                     </div>
                 </div>
             </div>
-            {{>videoRelated}}
+            <div class="partialContents" data-url="/videorelated/{{video.videoId}}">
+                Loading ...
+            </div>
+
+           
         </div>
     </div>
 </div>
