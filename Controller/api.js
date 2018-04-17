@@ -1,5 +1,5 @@
 var request = require('request');
-var url='http://localhost:2000';
+var url='http://144.202.115.228:2000';
 var api = {
     getVideo: function (id,callback) {
         
