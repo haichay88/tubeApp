@@ -2629,10 +2629,10 @@ font-style: italic;
     font-weight: bold;
 }
 @media (max-width: 769px) {
-    .f16 {
+    /* .f16 {
         position: absolute;
         left: 99px;
-    }
+    } */
     .container-full {
          margin-right: 0; 
          margin-left: 0; 
