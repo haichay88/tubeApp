@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   }
 
   var request = {
-    regionCode: "US",
+    regionCode: "VN",
   }
   if (req.cookies.rgc) {
     request.regionCode = req.cookies.rgc;
@@ -67,9 +67,31 @@ router.get('/Home/Search', function (req, res, next) {
 });
 
 /* Search video */
+router.get('/rev/:q', function (req, res, next) {
+
+  var request = {
+    q: req.params.q
+  }
+
+  videoService.searchVideo(request, function (data) {
+    var meta = {
+      title: config.Domain + " - " + req.params.q,
+      //imgUrl: data.video.imgUrl,
+      url: 'https://' + config.Domain + "/rev/" + req.params.q,
+      domain: config.Domain
+    };
+    res.render('index', {
+      layout: 'layout', videos: data,
+      regionCode: "VN",
+      meta: meta
+    });
+  });
+});
+
+/* Search video */
 router.get('/Home/live', function (req, res, next) {
   var request = {
-    regionCode: "US",
+    regionCode: "VN",
   }
   if (req.cookies.rgc) {
     request.regionCode = req.cookies.rgc;
@@ -95,7 +117,7 @@ router.get('/Home/live', function (req, res, next) {
 router.get('/Category/:cateid/:html', function (req, res) {
 
   var request = {
-    regionCode: "US",
+    regionCode: "VN",
     categoryId: req.params.cateid,
     hl: req.cookies.i18n,
 
@@ -179,51 +201,6 @@ router.get('/video/:videoId/:html', function (req, res, next) {
       });
     }
   });
-
-
-  // console.log(data);
-  // res.render('Video/video', {
-
-  //   layout: 'layout',
-  //   //video: videoService.getVideoDetail(request),
-  //   // channelInfo: data.channelInfo,
-  //   // videoRelateds: data.videoRelateds,
-  //   // comments: data.comments,
-  //   regionCode: req.cookies.rgc,
-  //   //meta: meta
-  // });
-
-  // videoService.videoDetail(function (data) {
-
-  //   var a = api.postVideo(data);
-
-  //   if (!data) {
-  //     res.redirect('/Home/NotFound');
-  //   } else {
-  //     var meta = {
-  //       title: data.video.title,
-  //       imgUrl: data.video.imgUrl,
-  //       url: 'https://' + config.Domain + "/video/" + data.video.videoId + "/" + data.video.titleConverted + ".html",
-  //       domain: config.Domain,
-  //       width: data.video.width,
-  //       height: data.video.height,
-  //       publishDated: data.video.publishDated,
-  //     };
-
-  //     res.render('Video/video', {
-
-  //       layout: 'layout',
-  //       video: data.video,
-  //       channelInfo: data.channelInfo,
-  //       videoRelateds: data.videoRelateds,
-  //       comments: data.comments,
-  //       regionCode: req.cookies.rgc,
-  //       meta: meta
-  //     });
-  //   }
-
-
-  // }, request);
 
 
 

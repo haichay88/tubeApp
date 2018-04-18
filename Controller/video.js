@@ -301,7 +301,7 @@ var videoServices = {
                         channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                         imgUrl: element.snippet.thumbnails.medium.url,
                         channelId: element.snippet.channelId,
-                        publishDated: element.snippet.publishedAt,
+                        publishDated:util.friendlyDate(element.snippet.publishedAt),
 
                     }
                     result.push(row);
