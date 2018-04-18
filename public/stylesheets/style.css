@@ -123,7 +123,7 @@ body {
     background-color: #fafafa;
     height: 100%;
     position: relative;
-    margin-top:70px;
+    /* margin-top:70px; */
 }
 /*body:after{
 	content:" ";
@@ -150,7 +150,7 @@ header {
     
     padding-top: 14px;
     padding-bottom: 14px;
-    position: fixed;
+    /* position: fixed; */
     margin: 0 auto;
     top: 0;
     width: 100%;
