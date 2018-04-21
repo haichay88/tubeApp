@@ -651,7 +651,7 @@ header ul.dropdown-notifications-items li a.all_notifications:hover{
 }
 header ul.account-menu {
     min-width: 161px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     position: absolute;
     border-radius: 0px;
     border-top-style: none;
