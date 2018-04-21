@@ -16,8 +16,8 @@
                         <div class="clearfix title-area">
                             <h1 class="">{{video.title}}</h1>
                         </div>
-                        <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"
-                            data-share="true"></div>
+                        {{!-- <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"
+                            data-share="true"></div> --}}
 
                         <div class="user-likes-count clearfix hidden-xs hidden-sm">
                             <div class="user-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -100,9 +100,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button data-active="false" data-show="moretab" data-type="show-more-detail" class="btn-show-more">
-                                <span>Show less</span>
-                            </button>
+                           
                         </div>
                     </div>
                     <div class="clearfix detail-bg hidden-xs hidden-sm" id="comments-block">
@@ -112,7 +110,7 @@
                                     <h2 class="com_count">Comment</h2>
                                 </div>
                                 <div id="userCommentsList" class="">
-                                    <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div>
+                                    {{!-- <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div> --}}
                                     <div class="partialContents" data-url="/comment/{{video.videoId}}">
                                         Loading ...
                                     </div>
