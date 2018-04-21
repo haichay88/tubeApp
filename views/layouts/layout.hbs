@@ -39,11 +39,12 @@
 
     <meta name="description" content="{{meta.tags}}">
     <link href="/stylesheets/bootstrap.css" rel="stylesheet" />
-    <link href="/stylesheets/Site.css" rel="stylesheet" />
+   
     <link href="/stylesheets/style.css" rel="stylesheet" />
     <link href="/stylesheets/fontcss.css" rel="stylesheet" />
     <link href="/stylesheets/flag.css" rel="stylesheet" />
     <link href="/stylesheets/font-awesome.min.css" rel="stylesheet" />
+     <link href="/stylesheets/Site.css" rel="stylesheet" />
 
 
 
@@ -52,7 +53,14 @@
 <body>
 
 
-    {{>headerTop}} {{{body}}} {{>menuleft}} {{>regionCode}}
+    {{>headerTop}}
+     {{{body}}} 
+
+{{>footer}}
+
+     {{>menuleft}} 
+     {{>regionCode}}
+     {{>language}}
 
 
 

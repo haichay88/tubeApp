@@ -693,6 +693,37 @@ header ul.account-menu li  .color-3{
 header ul.account-menu li  .color-4{
 	color: #444444;
 }
+
+ /* ===== footer=======*/
+
+ footer {
+	background-color: #444;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+footer * {
+    color: #dfdfdf;
+}
+footer .sel {
+    padding-top: 7px;
+}
+footer .sel .item-sel {
+    padding-left: 10px;
+    float: left;
+}
+footer .sel .item-sel p {
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    margin-bottom: 0;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+
 #main-category{
 	background-color: #FFF;
 	-webkit-box-shadow: -1px 2px 26px -6px rgba(0,0,0,0.37);
