@@ -8,18 +8,17 @@
 	"SearchVideo": "Nhập từ khoá tìm kiếm",
 	"NotFound": "Rất tiếc ! Chúng tôi không tìm thấy nội dung mà bạn yêu cầu",
 	"Live": "Trực tiếp",
-	"Movies": "Movies",
-	"AutosVehicles": "AutosVehicles",
-	"Music": "Music",
-	"PetsAnimals": "PetsAnimals",
-	"Sports": "Sports",
-	"TravelEvents": "TravelEvents",
+	"Movies": "Phim ảnh",
+	"AutosVehicles": "Xe cộ",
+	"Music": "Âm nhạc",
+	"PetsAnimals": "Động vật",
+	"Sports": "Thể thao",
+	"TravelEvents": "Du lịch & sự kiện",
 	"Gaming": "Gaming",
-	"Comedy": "Comedy",
-	"Shows": "Shows",
-	"HowtoStyle": "HowtoStyle",
-	"ScienceTechnology": "ScienceTechnology",
-	" LangCode ": " LangCode ",
-	" LangCode2 ": " LangCode2 ",
-	" SearchVideo ": " SearchVideo "
+	"Comedy": "Hài hước",
+	"Shows": "Chương trình",
+	"HowtoStyle": "Phong cách sống",
+	"ScienceTechnology": "Khoa học"
+
+	
 }

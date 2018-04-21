@@ -697,4 +697,7 @@ nav {
     #cssmenu>ul ul>li.has-sub>ul>li.active>a {
         border-top: none
     }
+    .site-output{
+        overflow: hidden;
+    }
 }
