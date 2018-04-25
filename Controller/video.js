@@ -616,9 +616,9 @@ var videoServices = {
                     //videoServices.videoDetail(callback, null);
                 } else {
                     // console.log('key ' + key);
-                    util.setKeyUnvalid(key);
-                    resetService();
-                    videoServices.getComment(request, callback);
+                   // util.setKeyUnvalid(key);
+                    //resetService();
+                    //videoServices.getComment(request, callback);
                     //callback(result);
                     console.log('catch error: ' + error);
                     // Handle any error from all above steps         

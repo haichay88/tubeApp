@@ -71,6 +71,7 @@ var commonUlti = {
     return duration;
   },
   formatNumber: function (x) {
+    if(!x) return undefined;
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
