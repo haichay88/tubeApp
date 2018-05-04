@@ -544,7 +544,7 @@ var videoServices = {
     getVideoDetail: function (request, callback) {
 
         api.getVideo(request.id, function (res) {
-            console.log(res)
+          
             if (res) {
                 var result = JSON.parse(res);
                 callback(result);

@@ -16,8 +16,9 @@
                         <div class="clearfix title-area">
                             <h1 class="">{{video.title}}</h1>
                         </div>
-                        {{!-- <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"
-                            data-share="true"></div> --}}
+                        {{!--
+                        <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small"
+                            data-show-faces="true" data-share="true"></div> --}}
 
                         <div class="user-likes-count clearfix hidden-xs hidden-sm">
                             <div class="user-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +28,7 @@
                                         <meta itemprop="url" content="/Channel/{{video.channelId}}/{{video.channelTitleConverted}}.html">
                                         <meta itemprop="logo" content="{{channelInfo.imgUrl}}">
                                         <meta itemprop="name" content="{{video.channelTitle}}">
-                                        <img itemprop="image" src="{{channelInfo.imgUrl}}" alt="Complex"> </a>
+                                        <img itemprop="image" src="{{channelInfo.imgUrl}}" alt="{{video.channelTitle}}"> </a>
                                     <div class="sub-title">
                                         <strong class="user_title" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
                                             <a href="/Channel/{{video.channelId}}/{{video.channelTitleConverted}}.html">{{video.channelTitle}}</a>
@@ -83,14 +84,9 @@
                             <div class="tab-pane fade in clearfix active" id="cb-item-share">
                                 <i id="closesh" class="fa fa-times fa-lg"></i>
                                 <div class="addthis_inline_share_toolbox"></div>
-                                <div id="share_form_div" class="action_box share_form clearfix">
-                                    <div class="action_box_title"></div>
-                                    <div class="form-group">
-                                        <label for="link_video">Link</label>
-                                        <input type="text" name="link_video" id="link_video" value="{{video.url}}" class="form-control"> </div>
 
-                                </div>
-                                <!-- Go to www.addthis.com/dashboard to customize your tools --><div class="addthis_inline_share_toolbox_y0el"></div>
+                                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                                <div class="addthis_inline_share_toolbox_y0el"></div>
                             </div>
                             <div class="tab-pane fade in active clearfix panel-collapse collapse" id="moretab">
                                 <div class="panel-body-content">
@@ -101,7 +97,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                     <div class="clearfix detail-bg hidden-xs hidden-sm" id="comments-block">
@@ -111,12 +107,14 @@
                                     <h2 class="com_count">Comment</h2>
                                 </div>
                                 <div id="userCommentsList" class="">
-                                    {{!-- <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div> --}}
+                                    {{!--
+                                    <div class="fb-comments" data-href="{{video.url}}" data-numposts="5" data-width="100%"></div> --}}
                                     <div class="partialContents" data-url="/comment/{{video.videoId}}">
                                         Loading ...
                                     </div>
 
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -127,8 +125,12 @@
             <div class="partialContents" data-url="/videorelated/{{video.videoId}}">
                 Loading ...
             </div>
+            <div class="col-md-4">
+                {{#each tags}}
+                <a class="label label-default" href="/rev/{{this}}">{{this}}</a>
+                {{/each}}
+            </div>  
 
-           
         </div>
     </div>
 </div>

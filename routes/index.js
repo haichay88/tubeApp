@@ -197,7 +197,8 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         layout: 'layout',
         video: data,
         regionCode: req.cookies.rgc,
-        meta: meta
+        meta: meta,
+        tags:data.tags.split(',')
       });
     }
   });

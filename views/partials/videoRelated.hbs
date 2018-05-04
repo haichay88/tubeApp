@@ -1,24 +1,26 @@
 <div class="col-md-4">
-                <!-- Composite Start -->
- <!-- Go to www.addthis.com/dashboard to customize your tools --><div class="addthis_inline_share_toolbox_y0el  hidden-lg hidden-md"></div>
-               
-                <div id="related-posts">
-                    {{# each videoRelateds}}
-                    <div class="related-video-item">
-                        <div class="thumb">
-                            <a href="/video/{{videoId}}/{{titleConverted}}.html">
-                                <img src="{{imgUrl}}" alt="{{title}}">
-                            </a>
-                        </div>
-                        <a href="/video/{{videoId}}/{{titleConverted}}.html"
-                            class="title">{{title}} </a>
-                        <a class="channel-name" href="/Channel/{{channelId}}/{{channelTitleConverted}}.html"> {{channelTitle}}
-                            <span>
-                                <i class="fa fa-check-circle"></i>
-                            </span>
-                        </a>
-                    </div>
-                {{/each}}
-                   
-                </div>
+    <!-- Composite Start -->
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <div class="addthis_inline_share_toolbox_y0el  hidden-lg hidden-md"></div>
+
+    <div id="related-posts">
+        {{# each videoRelateds}}
+        <div class="related-video-item">
+            <div class="thumb">
+                <a href="/video/{{videoId}}/{{titleConverted}}.html">
+                    <img src="{{imgUrl}}" alt="{{title}}">
+                </a>
             </div>
+            <a href="/video/{{videoId}}/{{titleConverted}}.html" class="title">{{title}} </a>
+            <a class="channel-name" href="/Channel/{{channelId}}/{{channelTitleConverted}}.html"> {{channelTitle}}
+                <span>
+                    <i class="fa fa-check-circle"></i>
+                </span>
+            </a>
+        </div>
+        {{/each}}
+
+       
+
+    </div>
+</div>
