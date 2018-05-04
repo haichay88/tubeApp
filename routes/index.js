@@ -191,6 +191,19 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         publishDated: data.publishDated,
         tags:data.tags
       };
+     var tg=data.tags.split(';');
+     var tags=[];
+     if(tg.length<=1){
+      tg=data.tags.split(',');
+     }
+     if(tg.length>=1){
+      tg.forEach(element => {
+        tags.push({
+          title:element,
+          link:element.replace(/ /g,'+')
+        });
+      });
+     }
 
       res.render('Video/video', {
 
@@ -198,7 +211,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         video: data,
         regionCode: req.cookies.rgc,
         meta: meta,
-        tags:data.tags.split(',')
+        tags:tags
       });
     }
   });

@@ -578,7 +578,7 @@ var videoServices = {
                             channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
                             imgUrl: element.snippet.thumbnails.medium.url,
                             channelId: element.snippet.channelId,
-                            tags:element.snippet.tags? element.snippet.tags.join():undefined,
+                            tags:element.snippet.tags? element.snippet.tags.join(';'):undefined,
                             publishDated: element.snippet.publishedAt,
                             duration: element.contentDetails.duration,
                             durationConverted: util.convertDuration(element.contentDetails.duration),
