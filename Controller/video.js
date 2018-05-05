@@ -357,7 +357,7 @@ var videoServices = {
             part: 'snippet,contentDetails,statistics',
             regionCode: request.regionCode,
             chart: 'mostPopular',
-            maxResults: 24
+            maxResults: 48
         }, function (err, data) {
             if (err) {
                 console.error('Error: ' + err);
