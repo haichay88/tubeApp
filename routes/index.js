@@ -16,7 +16,7 @@ function checkRegionCode(req, res, next) {
 
       res.cookie('rgc', geo.country.toLowerCase(), { httpOnly: true, maxAge: dateExpire });
     }
-    //console.log(geo);
+    console.log(geo);
     // next();     //If session exists, proceed to page
   }
   next();
