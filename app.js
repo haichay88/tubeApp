@@ -92,11 +92,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// app.listen(9000,'45.77.128.178',function(){
-//   console.log('your app is started');
-// });
-
-app.listen(3001,function(){
+app.listen(9000,'45.77.128.178',function(){
   console.log('your app is started');
 });
+
+// app.listen(3001,function(){
+//   console.log('your app is started');
+// });
 module.exports = app;
