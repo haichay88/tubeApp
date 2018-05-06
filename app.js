@@ -95,7 +95,7 @@ app.use(function(err, req, res, next) {
 // app.listen(9000,'45.77.128.178',function(){
 //   console.log('your app is started');
 // });
-app.set('trust proxy',true);
+app.set('trust proxy',false);
 app.listen(3001,function(){
   console.log('your app is started');
 });
