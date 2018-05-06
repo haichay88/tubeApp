@@ -1,9 +1,24 @@
 var express = require('express');
+var geoip = require('geoip-lite');
 var router = express.Router();
 var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
 var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
+
+function checkSignIn(req, res, next) {
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+   
+  if (!req.cookies.rgc) {
+   
+    var geo = geoip.lookup(ip);
+  console.log(geo);
+// next();     //If session exists, proceed to page
+  } 
+  next(); 
+}
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
@@ -167,7 +182,8 @@ router.get('/th', function (req, res) {
   res.cookie('i18n', 'th', { httpOnly: true, maxAge: dateExpire });
   res.redirect('/')
 });
-router.get('/video/:videoId/:html', function (req, res, next) {
+
+router.get('/video/:videoId/:html', checkSignIn,function (req, res, next) {
 
   if (!req.cookies.rgc) {
     res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
@@ -189,21 +205,21 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         width: data.width,
         height: data.height,
         publishDated: data.publishDated,
-        tags:data.tags
+        tags: data.tags
       };
-     var tg=data.tags.split(';');
-     var tags=[];
-     if(tg.length<=1){
-      tg=data.tags.split(',');
-     }
-     if(tg.length>=1){
-      tg.forEach(element => {
-        tags.push({
-          title:element,
-          link:element.replace(/ /g,'+')
+      var tg = data.tags.split(';');
+      var tags = [];
+      if (tg.length <= 1) {
+        tg = data.tags.split(',');
+      }
+      if (tg.length >= 1) {
+        tg.forEach(element => {
+          tags.push({
+            title: element,
+            link: element.replace(/ /g, '+')
+          });
         });
-      });
-     }
+      }
 
       res.render('Video/video', {
 
@@ -211,7 +227,7 @@ router.get('/video/:videoId/:html', function (req, res, next) {
         video: data,
         regionCode: req.cookies.rgc,
         meta: meta,
-        tags:tags
+        tags: tags
       });
     }
   });
