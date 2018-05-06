@@ -191,9 +191,9 @@ router.get('/th', function (req, res) {
 
 router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
 
-  // if (!req.cookies.rgc) {
-  //   res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
-  // }
+  if (!req.cookies.rgc) {
+    res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
+  }
   var request = {
     id: req.params.videoId
   };
