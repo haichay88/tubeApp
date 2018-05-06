@@ -7,8 +7,10 @@ var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
 
 function checkRegionCode(req, res, next) {
+  
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(ip);
+  console.log(req.ip);
   if (!req.cookies.rgc) {
 
     var geo = geoip.lookup(ip);
