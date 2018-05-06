@@ -13,7 +13,7 @@ function checkRegionCode(req, res, next) {
 
     var geo = geoip.lookup(ip);
     if (geo) {
-console.log(geo);
+
       res.cookie('rgc', geo.country.toLowerCase(), { httpOnly: true, maxAge: dateExpire });
     }
     //console.log(geo);
@@ -208,6 +208,7 @@ router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
         domain: config.Domain,
         width: data.width,
         height: data.height,
+        regionCode: req.cookies.rgc,
         publishDated: data.publishDated,
         tags: data.tags
       };
