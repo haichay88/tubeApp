@@ -6,21 +6,25 @@ var videoService = require('../Controller/video');
 var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
 
-function checkSignIn(req, res, next) {
+function checkRegionCode(req, res, next) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-   
+
   if (!req.cookies.rgc) {
-   
+
     var geo = geoip.lookup(ip);
-  console.log(geo);
-// next();     //If session exists, proceed to page
-  } 
-  next(); 
+    if (geo) {
+
+      res.cookie('rgc', geo.country, { httpOnly: true, maxAge: dateExpire });
+    }
+    //console.log(geo);
+    // next();     //If session exists, proceed to page
+  }
+  next();
 }
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', checkRegionCode,function (req, res, next) {
 
 
   if (req.cookies.i18n) {
@@ -183,7 +187,7 @@ router.get('/th', function (req, res) {
   res.redirect('/')
 });
 
-router.get('/video/:videoId/:html', checkSignIn,function (req, res, next) {
+router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
 
   if (!req.cookies.rgc) {
     res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
