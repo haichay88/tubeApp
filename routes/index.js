@@ -13,7 +13,7 @@ function checkRegionCode(req, res, next) {
 
     var geo = geoip.lookup(ip);
     if (geo) {
-
+console.log(geo);
       res.cookie('rgc', geo.country, { httpOnly: true, maxAge: dateExpire });
     }
     //console.log(geo);
