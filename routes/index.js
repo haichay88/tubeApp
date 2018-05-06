@@ -14,7 +14,7 @@ function checkRegionCode(req, res, next) {
     var geo = geoip.lookup(ip);
     if (geo) {
 console.log(geo);
-      res.cookie('rgc', geo.country, { httpOnly: true, maxAge: dateExpire });
+      res.cookie('rgc', geo.country.toLowerCase(), { httpOnly: true, maxAge: dateExpire });
     }
     //console.log(geo);
     // next();     //If session exists, proceed to page
