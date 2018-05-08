@@ -3,6 +3,7 @@ var { google } = require('googleapis');
 var Q = require("q");
 var util = require('../Common/ultilities');
 var api = require('../Controller/api');
+var config = require('../Common/config.json');
 var key = util.getFirstKey();
 var youtube = google.youtube({
     version: 'v3',
@@ -588,10 +589,13 @@ var videoServices = {
                             height: element.snippet.thumbnails.high.height,
                             width: element.snippet.thumbnails.high.width,
                             description: element.snippet.description,
+                            source:config.domain,
+
                         };
                         var reg={
                             video:row
                         };
+                        //row.
                         api.postVideo(reg);
                         callback(row);
 

@@ -3,6 +3,7 @@ var geoip = require('geoip-lite');
 var router = express.Router();
 var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
+var util = require('../Common/ultilities');
 var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
 
@@ -202,11 +203,20 @@ router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
     if (!data) {
       res.redirect('/Home/NotFound');
     } else {
+      if (!data.titleConverted) {
+        data.titleConverted = util.removeUnicode(data.title);
+      }
+
+      if (!data.channelTitleConverted)
+        data.channelTitleConverted = util.removeUnicode(data.channelTitle);
+
+      if (!data.durationConverted)
+        data.durationConverted = util.removeUnicode(data.duration);
 
       var meta = {
         title: data.title,
         imgUrl: data.imgUrl,
-        url: 'https://' + config.Domain + "/video/" + data.videoId + "/" + data.titleConverted + ".html",
+        url: 'https://' + config.Domain + "/video/" + data.videoId + "/" + util.removeUnicode(data.title) + ".html",
         domain: config.Domain,
         width: data.width,
         height: data.height,
