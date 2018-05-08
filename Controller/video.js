@@ -590,6 +590,7 @@ var videoServices = {
                             width: element.snippet.thumbnails.high.width,
                             description: element.snippet.description,
                             source:config.domain,
+                            categoryId:undefined
 
                         };
                         var reg={
