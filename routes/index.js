@@ -7,7 +7,7 @@ var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
 
 function checkRegionCode(req, res, next) {
-  
+
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(ip);
   console.log(req.ip);
@@ -26,7 +26,7 @@ function checkRegionCode(req, res, next) {
 
 
 /* GET home page. */
-router.get('/', checkRegionCode,function (req, res, next) {
+router.get('/', checkRegionCode, function (req, res, next) {
 
 
   if (req.cookies.i18n) {
@@ -214,19 +214,23 @@ router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
         publishDated: data.publishDated,
         tags: data.tags
       };
-      var tg = data.tags.split(';');
-      var tags = [];
-      if (tg.length <= 1) {
-        tg = data.tags.split(',');
-      }
-      if (tg.length >= 1) {
-        tg.forEach(element => {
-          tags.push({
-            title: element,
-            link: element.replace(/ /g, '+')
+      if (data.tags) {
+        var tg = data.tags.split(';');
+        var tags = [];
+        if (tg.length <= 1) {
+          tg = data.tags.split(',');
+        }
+        if (tg.length >= 1) {
+          tg.forEach(element => {
+            tags.push({
+              title: element,
+              link: element.replace(/ /g, '+')
+            });
           });
-        });
+        }
       }
+
+
 
       res.render('Video/video', {
 
