@@ -190,11 +190,13 @@ router.get('/th', function (req, res) {
   res.redirect('/')
 });
 
-router.get('/video/:videoId/:html', checkRegionCode, function (req, res, next) {
+router.get('/video/:videoId/*', checkRegionCode, function (req, res, next) {
 
   // if (!req.cookies.rgc) {
   //   res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
   // }
+ 
+console.log(req.params);
   var request = {
     id: req.params.videoId
   };

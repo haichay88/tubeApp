@@ -17,8 +17,8 @@
                             <h1 class="">{{video.title}}</h1>
                         </div>
                         {{!--
-                        <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small"
-                            data-show-faces="true" data-share="true"></div> --}}
+                        <div class="fb-like" data-href="{{video.url}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"
+                            data-share="true"></div> --}}
 
                         <div class="user-likes-count clearfix hidden-xs hidden-sm">
                             <div class="user-block col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -83,10 +83,7 @@
                         <div class="tab-content clearfix">
                             <div class="tab-pane fade in clearfix active" id="cb-item-share">
                                 <i id="closesh" class="fa fa-times fa-lg"></i>
-                                <div class="addthis_inline_share_toolbox"></div>
 
-                                <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                                <div class="addthis_inline_share_toolbox_y0el"></div>
                             </div>
                             <div class="tab-pane fade in active clearfix panel-collapse collapse" id="moretab">
                                 <div class="panel-body-content">
@@ -122,14 +119,27 @@
                     </div>
                 </div>
             </div>
-            <div class="partialContents" data-url="/videorelated/{{video.videoId}}">
-                Loading ...
+            <div class="col-md-4">
+                <!-- Composite Start -->
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox_y0el "></div>
+
+                <div id="related-posts">
+
+                    <div class="partialContents" data-url="/videorelated/{{video.videoId}}">
+                        Loading ...
+                    </div>
+
+
+                </div>
             </div>
+
+
             <div class="col-md-4">
                 {{#each tags}}
                 <a class="label label-default" href="/rev/{{link}}">{{title}}</a>
                 {{/each}}
-            </div>  
+            </div>
 
         </div>
     </div>

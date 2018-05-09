@@ -192,25 +192,28 @@ function getvideoByChannel(channelId) {
             deferred.reject(err);
         }
         if (data) {
-            if (data.data.items.length <= 0) {
+            if (data.data.items.length >0) {
+                var element = data.data.items.forEach(element => {
+                    var row = {
+                        title: element.snippet.title,
+                        titleConverted: util.removeUnicode(element.snippet.title),
+                        videoId: element.id.videoId,
+                        channelTitle: element.snippet.channelTitle,
+                        channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
+                        imgUrl: element.snippet.thumbnails.medium.url,
+                        channelId: element.snippet.channelId,
+    
+                    };
+                    result.push(row);
+                });
+                deferred.resolve(result);
+            }else{
                 deferred.resolve(null);
             }
-            var element = data.data.items.forEach(element => {
-                var row = {
-                    title: element.snippet.title,
-                    titleConverted: util.removeUnicode(element.snippet.title),
-                    videoId: element.id.videoId,
-                    channelTitle: element.snippet.channelTitle,
-                    channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
-                    imgUrl: element.snippet.thumbnails.medium.url,
-                    channelId: element.snippet.channelId,
-
-                };
-                result.push(row);
-            });
+            
 
 
-            deferred.resolve(result);
+           
 
 
         }
@@ -522,8 +525,13 @@ var videoServices = {
                 result.channelInfo = response;
                 getvideoByChannel(request.id)
                     .then(function (data) {
-                        result.videos = data;
-                        callback(result);
+                        if(data){
+                            result.videos = data;
+                            callback(result);
+                        }else{
+                            callback(null);
+                        }
+                        
                     });
             })
             .catch(function (error) {
@@ -545,7 +553,7 @@ var videoServices = {
     getVideoDetail: function (request, callback) {
 
         api.getVideo(request.id, function (res) {
-          
+            console.log(res);
             if (res) {
                 var result = JSON.parse(res);
                 callback(result);
@@ -566,40 +574,44 @@ var videoServices = {
                         //deferred.reject(err);
                     }
                     if (data) {
-                        if (data.data.items.length <= 0) {
-                            return null;
-                        }
-                        var element = data.data.items[0];
                         
-                        var row = {
-                            title: element.snippet.title,
-                            titleConverted: util.removeUnicode(element.snippet.title),
-                            videoId: element.id,
-                            channelTitle: element.snippet.channelTitle,
-                            channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
-                            imgUrl: element.snippet.thumbnails.medium.url,
-                            channelId: element.snippet.channelId,
-                            tags:element.snippet.tags? element.snippet.tags.join(';'):undefined,
-                            publishDated: element.snippet.publishedAt,
-                            duration: element.contentDetails.duration,
-                            durationConverted: util.convertDuration(element.contentDetails.duration),
-                            viewCount: util.formatNumber(element.statistics.viewCount),
-                            dislikeCount: util.formatNumber(element.statistics.dislikeCount),
-                            likeCount: util.formatNumber(element.statistics.likeCount),
-                            height: element.snippet.thumbnails.high.height,
-                            width: element.snippet.thumbnails.high.width,
-                            description: element.snippet.description,
-                            source:config.domain,
-                            categoryId:undefined
-
-                        };
-                        var reg={
-                            video:row
-                        };
-                        //row.
-                        api.postVideo(reg);
-                        callback(row);
-
+                        if (data.data.items.length > 0) {
+                            var element = data.data.items[0];
+                        
+                            var row = {
+                                title: element.snippet.title,
+                                titleConverted: util.removeUnicode(element.snippet.title),
+                                videoId: element.id,
+                                channelTitle: element.snippet.channelTitle,
+                                channelTitleConverted: util.removeUnicode(element.snippet.channelTitle),
+                                imgUrl: element.snippet.thumbnails.medium.url,
+                                channelId: element.snippet.channelId,
+                                tags:element.snippet.tags? element.snippet.tags.join(';'):undefined,
+                                publishDated: element.snippet.publishedAt,
+                                duration: element.contentDetails.duration,
+                                durationConverted: util.convertDuration(element.contentDetails.duration),
+                                viewCount: util.formatNumber(element.statistics.viewCount),
+                                dislikeCount: util.formatNumber(element.statistics.dislikeCount),
+                                likeCount: util.formatNumber(element.statistics.likeCount),
+                                height: element.snippet.thumbnails.high.height,
+                                width: element.snippet.thumbnails.high.width,
+                                description: element.snippet.description,
+                                source:config.domain,
+                                categoryId:undefined
+    
+                            };
+                           
+                            var reg={
+                                video:row
+                            };
+                            //row.
+                            api.postVideo(reg);
+                            callback(row);
+    
+                        }else{
+                            callback(null);
+                        }
+                        
 
 
                     }
