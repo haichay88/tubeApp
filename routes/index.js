@@ -259,7 +259,7 @@ console.log(req.params);
 
 });
 
-router.get('/Channel/:channelId/:html', function (req, res, next) {
+router.get('/Channel/:channelId/*', function (req, res, next) {
 
   var request = {
     id: req.params.channelId
