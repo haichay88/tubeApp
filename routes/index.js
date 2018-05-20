@@ -6,6 +6,7 @@ var videoService = require('../Controller/video');
 var util = require('../Common/ultilities');
 var api = require('../Controller/api');
 var dateExpire = 360 * 24 * 3600 * 1000;
+var domainX = [' - ru-video.com', ' - 2tubenow.com', ' - th-clip.com', ' - video4h.com']
 
 function checkRegionCode(req, res, next) {
 
@@ -214,6 +215,14 @@ console.log(req.params);
 
       if (!data.durationConverted)
         data.durationConverted = util.removeUnicode(data.duration);
+
+
+
+        domainX.forEach((item) => {
+          if (data.title.indexOf(item) > -1) {
+            data.title = data.title.replace(item, '');
+          }
+           });
 
       var meta = {
         title: data.title,
