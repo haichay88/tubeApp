@@ -289,7 +289,7 @@ var videoServices = {
                 resetService();
                 videoServices.searchVideo(request, callback);
                 //callback(result);
-                console.log('searchVideo catch error: ' + error);
+                console.log('searchVideo catch error: ' + err);
                 // Handle any error from all above steps         
 
 

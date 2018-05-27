@@ -108,9 +108,40 @@
                     $(item).load(url);
                 }
             });
+
+             var key = $("#key").html();
+             if(key){
+                $.ajax({
+                    url: "https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=" + key + "&format=5&alt=json&callback=?",
+                    dataType: "jsonp",
+                    success: function (n) {
+                        
+                        var result= ($.map(n[1], function (n) {
+                            return {
+                                label: n[0],
+                                value: n[0].replace(/ /g,'+')
+                            }
+                        }));
+                         if(result){
+                            var html=[];
+                            result.forEach((element)=>{
+
+                                var row='<div class="vse"><a href="/rev/'+element.value+'">'+element.label+'</a></div>';
+                                html.push(row);
+                            });
+                        
+                            $("#tag").append(html);
+                         }
+                        
+                       
+                    }
+                });
+             }
+             
+        
         });
     </script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50f7ac2d446ac03a"></script>
+    
 </body>
 
 </html>

@@ -13,17 +13,19 @@
                         <img src="/images/thichxemhai.png" alt="{{meta.domain}}" class="hidden-lg hidden-md" style="width:41px;"> </a>
                     
                 </div>
-                <div class="search-form hidden-md hidden-lg hidden-md search-form-mb ">
-                    <form action="/Home/Search" id="search" method="get">
-                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" name="query" autocomplete="off">
+                {{!-- <div class="search-form hidden-md hidden-lg hidden-md search-form-mb ">
+                    <form action="/Home/Search/" id="search" method="get" class="search-form">
+                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" id="query" name="query" autocomplete="on" class="ui-autocomplete-input">
+                        <div id="lsbl"></div>
                         <input type="submit" value="Keywords"> </form>
                 </div>
-               
+                --}}
             </div>
-            <div class="col-lg-5 col-md-3 col-sm-6 hidden-xs hidden-sm">
-                <div class="search-form">
-                    <form action="/Home/Search/" id="search" method="get">
-                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" name="query" autocomplete="on">
+            <div class="col-lg-5 col-md-3 col-sm-6 search-form-mb">
+               <div class="search-form">
+                    <form action="/Home/Search/" id="search" method="get" class="search-form">
+                        <input type="text" placeholder="{{{__ "SearchVideo"}}}" id="query" name="query" value="{{rev.text}}" autocomplete="on" class="ui-autocomplete-input">
+                        <div id="lsbl"></div>
                         <input type="submit" value="Keywords"> </form>
                 </div>
             </div>
