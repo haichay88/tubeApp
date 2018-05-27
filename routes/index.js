@@ -86,7 +86,7 @@ router.get('/Home/Search', function (req, res, next) {
       text: request.q.split("+").join(" "),
       link: request.q
     };
-    res.render('home/rev', {
+    res.render('Home/rev', {
       layout: 'layout',
       videos: data,
       regionCode: "VN",
@@ -116,7 +116,7 @@ router.get('/rev/:q', function (req, res, next) {
       text: request.q.split("+").join(" "),
       link: request.q
     };
-    res.render('home/rev', {
+    res.render('Home/rev', {
       layout: 'layout', videos: data,
       regionCode: "VN",
       meta: meta,
