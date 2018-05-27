@@ -106,15 +106,16 @@ router.get('/rev/:q', function (req, res, next) {
   }
 
   videoService.searchVideo(request, function (data) {
-    var meta = {
-      title: config.Domain + " - " + req.params.q,
-      //imgUrl: data.video.imgUrl,
-      url: 'https://' + config.Domain + "/rev/" + req.params.q,
-      domain: config.Domain
-    };
+    
     var rev = {
       text: request.q.split("+").join(" "),
       link: request.q
+    };
+    var meta = {
+      title: config.Domain + " - " + rev.text,
+      //imgUrl: data.video.imgUrl,
+      url: 'https://' + config.Domain + "/rev/" + rev.text,
+      domain: config.Domain
     };
     res.render('Home/rev', {
       layout: 'layout', videos: data,
