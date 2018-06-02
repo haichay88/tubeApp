@@ -5,22 +5,26 @@ var config = require('../Common/config.json');
 var videoService = require('../Controller/video');
 var util = require('../Common/ultilities');
 var api = require('../Controller/api');
+var winston = require('winston');
 var dateExpire = 360 * 24 * 3600 * 1000;
 var domainX = [' - ru-video.com', ' - 2tubenow.com', ' - th-clip.com', ' - video4h.com']
 
 function checkRegionCode(req, res, next) {
 
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  console.log(ip);
-  console.log(req.ip);
+  winston.info(ip);
+  winston.info(req.ip);
   if (!req.cookies.rgc) {
 
     var geo = geoip.lookup(ip);
     if (geo) {
 
-      res.cookie('rgc', geo.country.toLowerCase(), { httpOnly: true, maxAge: dateExpire });
+      res.cookie('rgc', geo.country.toLowerCase(), {
+        httpOnly: true,
+        maxAge: dateExpire
+      });
     }
-    console.log(geo);
+    winston.info(geo);
     // next();     //If session exists, proceed to page
   }
   next();
@@ -28,7 +32,7 @@ function checkRegionCode(req, res, next) {
 
 
 /* GET home page. */
-router.get('/', checkRegionCode, function (req, res, next) {
+router.get('/', checkRegionCode, function(req, res, next) {
 
 
   if (req.cookies.i18n) {
@@ -42,7 +46,7 @@ router.get('/', checkRegionCode, function (req, res, next) {
     request.regionCode = req.cookies.rgc;
   }
 
-  videoService.trending(request, function (data) {
+  videoService.trending(request, function(data) {
     var meta = {
       title: config.Title,
       imgUrl: data[0].imgUrl,
@@ -53,7 +57,8 @@ router.get('/', checkRegionCode, function (req, res, next) {
       res.redirect('/Home/NotFound');
     } else {
       res.render('index', {
-        layout: 'layout', videos: data,
+        layout: 'layout',
+        videos: data,
         regionCode: req.cookies.rgc,
         meta: meta
       });
@@ -63,18 +68,21 @@ router.get('/', checkRegionCode, function (req, res, next) {
 
 });
 /* GET home page. */
-router.get('/Home/ChangeRegion/:regioncode', function (req, res, next) {
-  res.cookie('rgc', req.params.regioncode, { httpOnly: true, maxAge: dateExpire });
+router.get('/Home/ChangeRegion/:regioncode', function(req, res, next) {
+  res.cookie('rgc', req.params.regioncode, {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
 /* Search video */
-router.get('/Home/Search', function (req, res, next) {
+router.get('/Home/Search', function(req, res, next) {
 
   var request = {
     q: req.query.query
   }
 
-  videoService.searchVideo(request, function (data) {
+  videoService.searchVideo(request, function(data) {
     var meta = {
       title: config.Domain + " - " + req.query.query,
       //imgUrl: data.video.imgUrl,
@@ -99,14 +107,14 @@ router.get('/Home/Search', function (req, res, next) {
 
 
 /* Search video */
-router.get('/rev/:q', function (req, res, next) {
+router.get('/rev/:q', function(req, res, next) {
 
   var request = {
     q: req.params.q
   }
 
-  videoService.searchVideo(request, function (data) {
-    
+  videoService.searchVideo(request, function(data) {
+
     var rev = {
       text: request.q.split("+").join(" "),
       link: request.q
@@ -118,7 +126,8 @@ router.get('/rev/:q', function (req, res, next) {
       domain: config.Domain
     };
     res.render('Home/rev', {
-      layout: 'layout', videos: data,
+      layout: 'layout',
+      videos: data,
       regionCode: "VN",
       meta: meta,
       rev: rev
@@ -130,14 +139,14 @@ router.get('/rev/:q', function (req, res, next) {
 
 
 /* Search video */
-router.get('/Home/live', function (req, res, next) {
+router.get('/Home/live', function(req, res, next) {
   var request = {
     regionCode: "VN",
   }
   if (req.cookies.rgc) {
     request.regionCode = req.cookies.rgc;
   }
-  videoService.liveVideo(request, function (data) {
+  videoService.liveVideo(request, function(data) {
     var meta = {
       title: config.Title,
       //imgUrl: data.video.imgUrl,
@@ -146,7 +155,8 @@ router.get('/Home/live', function (req, res, next) {
     };
 
     res.render('index', {
-      layout: 'layout', videos: data,
+      layout: 'layout',
+      videos: data,
       regionCode: req.cookies.rgc,
       meta: meta
 
@@ -155,7 +165,7 @@ router.get('/Home/live', function (req, res, next) {
 });
 
 /* get video by categor */
-router.get('/Category/:cateid/:html', function (req, res) {
+router.get('/Category/:cateid/:html', function(req, res) {
 
   var request = {
     regionCode: "VN",
@@ -166,15 +176,16 @@ router.get('/Category/:cateid/:html', function (req, res) {
   if (req.cookies.rgc) {
     request.regionCode = req.cookies.rgc;
   }
-  videoService.getvideoByCate(request, function (data) {
+  videoService.getvideoByCate(request, function(data) {
     res.render('index', {
-      layout: 'layout', videos: data,
+      layout: 'layout',
+      videos: data,
       regionCode: req.cookies.rgc
     });
   });
 });
 
-router.get('/Home/NotFound', function (req, res, next) {
+router.get('/Home/NotFound', function(req, res, next) {
   res.render('Home/notFound', {
     layout: 'layout',
     regionCode: req.cookies.rgc,
@@ -186,40 +197,55 @@ router.get('/Home/NotFound', function (req, res, next) {
 });
 
 ///
-router.get('/vi', function (req, res) {
+router.get('/vi', function(req, res) {
 
-  res.cookie('i18n', 'vi', { httpOnly: true, maxAge: dateExpire });
+  res.cookie('i18n', 'vi', {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
-router.get('/en', function (req, res) {
-  res.cookie('i18n', 'en', { httpOnly: true, maxAge: dateExpire });
+router.get('/en', function(req, res) {
+  res.cookie('i18n', 'en', {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
-router.get('/ja', function (req, res) {
-  res.cookie('i18n', 'ja', { httpOnly: true, maxAge: dateExpire });
+router.get('/ja', function(req, res) {
+  res.cookie('i18n', 'ja', {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
-router.get('/ko', function (req, res) {
-  res.cookie('i18n', 'ko', { httpOnly: true, maxAge: dateExpire });
+router.get('/ko', function(req, res) {
+  res.cookie('i18n', 'ko', {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
 
-router.get('/th', function (req, res) {
-  res.cookie('i18n', 'th', { httpOnly: true, maxAge: dateExpire });
+router.get('/th', function(req, res) {
+  res.cookie('i18n', 'th', {
+    httpOnly: true,
+    maxAge: dateExpire
+  });
   res.redirect('/')
 });
 
-router.get('/video/:videoId/*', checkRegionCode, function (req, res, next) {
+router.get('/video/:videoId/*', checkRegionCode, function(req, res, next) {
 
   // if (!req.cookies.rgc) {
   //   res.cookie('rgc', 'us', { httpOnly: true, maxAge: dateExpire });
   // }
 
-  console.log(req.params);
+  winston.info(req.params);
   var request = {
     id: req.params.videoId
   };
-  videoService.getVideoDetail(request, function (data) {
+  videoService.getVideoDetail(request, function(data) {
 
     if (!data) {
       res.redirect('/Home/NotFound');
@@ -286,12 +312,12 @@ router.get('/video/:videoId/*', checkRegionCode, function (req, res, next) {
 
 });
 
-router.get('/Channel/:channelId/*', function (req, res, next) {
+router.get('/Channel/:channelId/*', function(req, res, next) {
 
   var request = {
     id: req.params.channelId
   };
-  videoService.channelDetail(request, function (data) {
+  videoService.channelDetail(request, function(data) {
     if (!data) {
       res.redirect('/Home/NotFound');
     } else {
@@ -315,14 +341,14 @@ router.get('/Channel/:channelId/*', function (req, res, next) {
 
 });
 
-router.get('/comment/:videoId', function (req, res) {
-  //console.log(req);
+router.get('/comment/:videoId', function(req, res) {
+  //winston.info(req);
   var request = {
     id: req.params.videoId
   };
-  videoService.getComment(request, function (sv) {
+  videoService.getComment(request, function(sv) {
 
-    //console.log(result);
+    //winston.info(result);
     res.render('partials/comment', {
 
       layout: false,
@@ -336,14 +362,14 @@ router.get('/comment/:videoId', function (req, res) {
   });
 });
 
-router.get('/videorelated/:videoId', function (req, res) {
-  //console.log(req);
+router.get('/videorelated/:videoId', function(req, res) {
+  //winston.info(req);
   var request = {
     id: req.params.videoId
   };
-  videoService.getVideoRelated(request, function (sv) {
+  videoService.getVideoRelated(request, function(sv) {
 
-    //console.log(result);
+    //winston.info(result);
     res.render('partials/videoRelated', {
 
       layout: false,
