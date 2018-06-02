@@ -243,7 +243,7 @@ function getVideoComment(id) {
 
   }, function(err, data) {
     if (err) {
-      console.error('getVideoComment Error: ' + err);
+      winston.info('getVideoComment Error: ' + err);
       deferred.reject(err);
     }
     if (data) {
@@ -293,7 +293,7 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        console.error('Error: ' + err);
+        winston.info('Error: ' + err);
         // winston.info('key ' + key);
         util.setKeyUnvalid(key);
         resetService();
@@ -337,7 +337,7 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        console.error('Error: ' + err);
+        winston.info('Error: ' + err);
         return null;
       }
       if (data) {
@@ -374,7 +374,7 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        console.error('Error: ' + err);
+        winston.info('Error: ' + err);
         winston.info('key ' + key);
         util.setKeyUnvalid(key);
         resetService();
@@ -483,7 +483,7 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        console.error('Error: ' + err);
+        winston.info('Error: ' + err);
         // winston.info('key ' + key);
         // util.setKeyUnvalid(key);
         // resetService();
