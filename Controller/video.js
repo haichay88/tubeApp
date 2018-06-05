@@ -6,8 +6,6 @@ var util = require('../Common/ultilities');
 var api = require('../Controller/api');
 var config = require('../Common/config.json');
 var key = util.getFirstKey();
-var winston = require('winston');
-
 var youtube = google.youtube({
   version: 'v3',
   auth: key //key  //"AIzaSyDP5Elo2ca45nw6UAbMFajMbMu8bXNT5CU"
@@ -32,7 +30,6 @@ function getvideoInfo(request) {
   };
   var data = api.getVideo(request.id);
   if (data) {
-    winston.info('has data from api');
     deferred.resolve(row);
   } else {
     youtube.videos.list({
@@ -91,10 +88,8 @@ function getvideoRelated(id) {
 
   }, function(err, data) {
     if (err) {
-      winston.log();
-      ('getvideoRelated Error: ' + err);
-      winston.log('key ' + key);
-
+      console.log(err);
+     
       deferred.reject(err);
     }
     if (data) {
@@ -159,7 +154,7 @@ function getChannel(request) {
     id: request.id
   }, function(err, data) {
     if (err) {
-      winston.log('getChannel' + err);
+      console.log(err);
       deferred.reject(err);
 
     }
@@ -197,7 +192,7 @@ function getvideoByChannel(channelId) {
     type: 'video'
   }, function(err, data) {
     if (err) {
-      winston.info(err);
+      console.log(err);
       deferred.reject(err);
     }
     if (data) {
@@ -243,7 +238,7 @@ function getVideoComment(id) {
 
   }, function(err, data) {
     if (err) {
-      winston.info('getVideoComment Error: ' + err);
+      console.log(err);
       deferred.reject(err);
     }
     if (data) {
@@ -293,13 +288,12 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        winston.info('Error: ' + err);
-        // winston.info('key ' + key);
+      
         util.setKeyUnvalid(key);
         resetService();
         videoServices.searchVideo(request, callback);
         //callback(result);
-        winston.info('searchVideo catch error: ' + err);
+        console.log(err);
         // Handle any error from all above steps
 
 
@@ -337,7 +331,7 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        winston.info('Error: ' + err);
+        console.log(err);
         return null;
       }
       if (data) {
@@ -374,8 +368,8 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        winston.info('Error: ' + err);
-        winston.info('key ' + key);
+        console.log(err);
+        console.log('key ' + key);
         util.setKeyUnvalid(key);
         resetService();
         videoServices.trending(request, callback);
@@ -454,15 +448,15 @@ var videoServices = {
 
 
         if (error.code == 400) {
-          winston.info('err 403' + error);
+          console.log('err 403' + error);
           videoServices.videoDetail(callback, null);
         } else {
-          // winston.info('key ' + key);
+          // console.log('key ' + key);
           util.setKeyUnvalid(key);
           resetService();
           videoServices.videoDetail(callback, request);
           //callback(result);
-          winston.info('catch error: ' + error);
+          console.log( error);
           // Handle any error from all above steps
         }
 
@@ -483,11 +477,8 @@ var videoServices = {
       maxResults: 48
     }, function(err, data) {
       if (err) {
-        winston.info('Error: ' + err);
-        // winston.info('key ' + key);
-        // util.setKeyUnvalid(key);
-        // resetService();
-        // videoServices.trending(request, callback);
+        console.log( err);
+       
       }
       if (data) {
 
@@ -546,17 +537,17 @@ var videoServices = {
       })
       .catch(function(error) {
 
-        winston.info('err 403' + error);
+        console.log('err 403' + error);
         if (error.code == 400) {
-          winston.info('err 403' + error);
+          
           videoServices.channelDetail(null, callback);
         } else {
-          // winston.info('key ' + key);
+          // console.log('key ' + key);
           util.setKeyUnvalid(key);
           resetService();
           videoServices.channelDetail(request, callback);
           //callback(result);
-          winston.info('catch error: ' + error);
+          console.log(error);
           // Handle any error from all above steps
         }
       }).done();
@@ -575,12 +566,12 @@ var videoServices = {
           id: request.id
         }, function(err, data) {
           if (err) {
-            // winston.info('key ' + key);
+            // console.log('key ' + key);
             util.setKeyUnvalid(key);
             resetService();
             videoServices.getVideoDetail(request, callback);
             //callback(result);
-            winston.info('catch getVideoDetail error: ' + err);
+            console.log(err);
             // Handle any error from all above steps
             //deferred.reject(err);
           }
@@ -640,15 +631,15 @@ var videoServices = {
 
 
         if (error.code == 400) {
-          winston.info('err 403' + error);
+          console.log('err 403' + error);
           //videoServices.videoDetail(callback, null);
         } else {
-          // winston.info('key ' + key);
+          // console.log('key ' + key);
           // util.setKeyUnvalid(key);
           //resetService();
           //videoServices.getComment(request, callback);
           //callback(result);
-          winston.info('catch error: ' + error);
+          console.log(error);
           // Handle any error from all above steps
         }
 
@@ -664,15 +655,15 @@ var videoServices = {
 
 
         if (error.code == 400) {
-          winston.info('err 403' + error);
+          console.log('err 403' + error);
           //videoServices.videoDetail(callback, null);
         } else {
-          // winston.info('key ' + key);
+          // console.log('key ' + key);
           util.setKeyUnvalid(key);
           resetService();
           videoServices.getVideoRelated(request, callback);
           //callback(result);
-          winston.info('catch error: ' + error);
+          console.log( error);
           // Handle any error from all above steps
         }
 

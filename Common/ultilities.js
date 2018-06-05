@@ -1,11 +1,16 @@
 var getSlug = require('speakingurl');
 var keys = require('../Common/key2.json');
-var winston = require('winston');
+
 var commonUlti = {
-  removeUnicode: function(val) {
-    return getSlug(val);
+  removeUnicode: function (val) {
+    try {
+      return getSlug(val);
+    } catch (error) {
+      return val;
+    }
+
   },
-  convertDuration: function(t) {
+  convertDuration: function (t) {
     //dividing period from time
     var x = t.split('T'),
       duration = '',
@@ -71,13 +76,14 @@ var commonUlti = {
     duration += time.M + ':' + time.S;
     return duration;
   },
-  formatNumber: function(x) {
+  formatNumber: function (x) {
     if (!x) return undefined;
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
   },
-  friendlyDate: function(time) {
+  friendlyDate: function (time) {
+
     var date = new Date((time || "").replace(/-/g, "/").replace(/[TZ]/g, " ")),
       diff = (((new Date()).getTime() - date.getTime()) / 1000),
       day_diff = Math.floor(diff / 86400);
@@ -87,18 +93,18 @@ var commonUlti = {
     return day_diff == 0 && (
       diff < 60 && "just now" || diff < 120 && "1 minute ago" || diff < 3600 && Math.floor(diff / 60) + " minutes ago" || diff < 7200 && "1 hour ago" || diff < 86400 && Math.floor(diff / 3600) + " hours ago") || day_diff == 1 && "Yesterday" || day_diff < 7 && day_diff + " days ago" || day_diff < 31 && Math.ceil(day_diff / 7) + " weeks ago";
   },
-  getFirstKey: function() {
-    var keyValilds = keys.filter(function(item) {
+  getFirstKey: function () {
+    var keyValilds = keys.filter(function (item) {
       return item.IsOverLimit == 0;
     });
-    winston.info('key next ' + keyValilds[0].KeyAPI);
+   
     return keyValilds[0].KeyAPI;
   },
-  setKeyUnvalid: function(key) {
+  setKeyUnvalid: function (key) {
     keys.forEach(element => {
       if (element.KeyAPI == key) {
         element.IsOverLimit = 1;
-        winston.info('key just over ' + element.KeyAPI);
+       
       }
     });
   }
